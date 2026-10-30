@@ -1,0 +1,10 @@
+{
+  "name": "getartcraft.com",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static HTML clone of https://getartcraft.com/",
+  "scripts": {
+    "preview": "npx serve .",
+    "start": "npx serve ."
+  }
+}

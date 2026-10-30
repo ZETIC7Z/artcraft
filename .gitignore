@@ -24,6 +24,10 @@ target/
 **/*.rs.bk
 Cargo.lock
 
+# Node
+node_modules/
+.temp/
+
 # Windows installers and binaries
 *.exe
 *.msi
