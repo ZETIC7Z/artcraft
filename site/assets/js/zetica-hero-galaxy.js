@@ -1,8 +1,9 @@
 /**
  * ZETICA 3D Hero Galaxy Engine
- * Faithful port of storytold/artcraft hero-galaxy.tsx & hero-galaxy-tunables.ts
- * Featuring Archimedean spiral arms, 12-tap Poisson blur nebula, 3D card bowing,
- * chromatic dispersion, video textures, idle conveyor drift, and mouse parallax.
+ * Ports storytold/artcraft hero-galaxy.tsx & hero-galaxy-tunables.ts
+ * Features Archimedean spiral arms, glowing neon energy pulses traveling along ribbons,
+ * 12-tap Poisson blur nebula, 3D card bowing, chromatic dispersion, video textures,
+ * idle conveyor drift, mouse parallax, and live light/dark mode theme reactivity.
  */
 
 (function () {
@@ -48,7 +49,7 @@
     const galaxyGroup = new THREE.Group();
     scene.add(galaxyGroup);
 
-    // Color theme detection
+    // Theme Detection
     function isDarkMode() {
       return document.documentElement.getAttribute('data-theme') === 'dark' ||
              window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -58,8 +59,8 @@
     const ARMS = 6;
     const TURNS = 1.05;
     const R_MAX_FRAC = 0.68;
-    const BIRTH_FRAC = 0.14; // Clean breathing room around the central wordmark
-    const CARD_COUNT = 30;
+    const BIRTH_FRAC = 0.12;
+    const CARD_COUNT = 32;
 
     function getRadii() {
       const diag = Math.hypot(width, height);
@@ -68,7 +69,7 @@
       return { rMax, rBirth };
     }
 
-    // Shaders from hero-galaxy.tsx
+    // --- Shaders for Showcase Cards ---
     const CARD_VERT = `
       uniform float uCurve;
       uniform float uWarp;
@@ -137,12 +138,118 @@
       }
     `;
 
-    // 1. Create Underlay Guide Curves and Ticks
+    // --- Shaders for Arm Ribbon Neon Pulses ---
+    const PULSE_VERT = `
+      attribute vec2 aN;
+      attribute float aSide;
+      attribute float aT;
+      attribute float aArm;
+      uniform float uTime;
+      uniform float uSpeed;
+      uniform float uWidth;
+      uniform float uCount;
+      uniform float uBaseW;
+      uniform float uPulseW;
+      varying float vG;
+      varying float vSide;
+      varying float vArm;
+
+      void main() {
+        // Outward traveling energy pulses
+        float d = fract(aT * uCount - uTime * uSpeed + aArm * 0.618);
+        float s = d - 0.5;
+        float sig = uWidth * (s < 0.0 ? 1.7 : 0.55);
+        float g = exp(-0.5 * (s / sig) * (s / sig));
+        g *= smoothstep(0.02, 0.12, aT);
+
+        vG = g;
+        vSide = aSide;
+        vArm = aArm;
+
+        float w = uBaseW + g * uPulseW;
+        vec3 pos = position;
+        pos.xy += aN * (aSide * w * 0.5);
+        gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(pos, 1.0);
+      }
+    `;
+
+    const PULSE_FRAG = `
+      precision highp float;
+      uniform vec3 uColor;
+      uniform float uAlpha;
+      uniform vec3 uPulseColor;
+      uniform float uPulseAlpha;
+      uniform float uHue;
+      varying float vG;
+      varying float vSide;
+      varying float vArm;
+
+      // YIQ Hue rotation for smooth color spectrum across arms
+      vec3 hueRotate(vec3 color, float a) {
+        const mat3 toYIQ = mat3(
+          0.299, 0.587, 0.114,
+          0.596, -0.274, -0.322,
+          0.211, -0.523, 0.312
+        );
+        const mat3 toRGB = mat3(
+          1.0, 0.956, 0.621,
+          1.0, -0.272, -0.647,
+          1.0, -1.106, 1.703
+        );
+        vec3 yiq = color * toYIQ;
+        float h = atan(yiq.z, yiq.y) + a;
+        float c = length(yiq.yz);
+        return clamp(vec3(yiq.x, c * cos(h), c * sin(h)) * toRGB, 0.0, 1.0);
+      }
+
+      void main() {
+        float edge = 1.0 - smoothstep(0.4, 1.0, abs(vSide));
+        float g = clamp(vG, 0.0, 1.0);
+        vec3 pulseCol = hueRotate(uPulseColor, vArm * uHue * 6.28318);
+        vec3 col = mix(uColor, pulseCol, g);
+        gl_FragColor = vec4(col, (uAlpha + uPulseAlpha * vG) * edge);
+      }
+    `;
+
+    // 1. Build Ribbon Geometry & Pulse Materials
     const underlayGroup = new THREE.Group();
     galaxyGroup.add(underlayGroup);
 
-    let guideLines = [];
-    let tickLines = [];
+    let pulseUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: new THREE.Color(0.2, 0.2, 0.2) },
+      uAlpha: { value: 0.15 },
+      uPulseColor: { value: new THREE.Color("#00ff66") }, // Vivid neon green base
+      uPulseAlpha: { value: 0.95 },
+      uSpeed: { value: 0.28 },
+      uWidth: { value: 0.045 },
+      uCount: { value: 2.0 },
+      uHue: { value: 0.35 },
+      uBaseW: { value: 1.5 },
+      uPulseW: { value: 5.5 }
+    };
+
+    const pulseMat = new THREE.ShaderMaterial({
+      vertexShader: PULSE_VERT,
+      fragmentShader: PULSE_FRAG,
+      uniforms: pulseUniforms,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      side: THREE.DoubleSide
+    });
+
+    const circleMat = new THREE.LineBasicMaterial({
+      color: 0x888888,
+      transparent: true,
+      opacity: 0.2
+    });
+
+    const tickMat = new THREE.LineBasicMaterial({
+      color: 0x888888,
+      transparent: true,
+      opacity: 0.35
+    });
 
     function buildUnderlay() {
       while (underlayGroup.children.length > 0) {
@@ -153,72 +260,105 @@
 
       const { rMax, rBirth } = getRadii();
       const dark = isDarkMode();
-      const lineCol = dark ? 0xffffff : 0x000000;
-      const lineMat = new THREE.LineBasicMaterial({
-        color: lineCol,
-        transparent: true,
-        opacity: dark ? 0.12 : 0.08
-      });
-      const tickMat = new THREE.LineBasicMaterial({
-        color: lineCol,
-        transparent: true,
-        opacity: dark ? 0.22 : 0.15
-      });
 
-      // Spiral Arms
+      pulseUniforms.uColor.value.set(dark ? "#333333" : "#dddddd");
+      pulseUniforms.uAlpha.value = dark ? 0.22 : 0.12;
+      pulseUniforms.uPulseAlpha.value = dark ? 1.0 : 0.88;
+      pulseUniforms.uPulseW.value = dark ? 6.0 : 4.5;
+      circleMat.color.set(dark ? "#555555" : "#cccccc");
+      tickMat.color.set(dark ? "#777777" : "#aaaaaa");
+
       const thetaBirth = BIRTH_FRAC * (TURNS * Math.PI * 2);
       const thetaExit = TURNS * Math.PI * 2;
       const b = (rMax - rBirth) / (thetaExit - thetaBirth);
 
+      // Build Extruded Ribbons for each arm
       for (let j = 0; j < ARMS; j++) {
         const phase = (j * Math.PI * 2) / ARMS;
-        const pts = [];
-        const tickPts = [];
-        const steps = 120;
+        const pos = [];
+        const nrm = [];
+        const sides = [];
+        const ts = [];
+        const armIdx = [];
+        const indices = [];
+        const steps = 180;
 
         for (let k = 0; k <= steps; k++) {
-          const t = thetaBirth + (k / steps) * (thetaExit - thetaBirth);
-          const r = rBirth + b * (t - thetaBirth);
+          const t = thetaBirth * 0.4 + (k / steps) * (thetaExit - thetaBirth * 0.4);
+          const r = b * t;
           const a = t + phase;
           const x = r * Math.cos(a);
           const y = r * Math.sin(a);
-          pts.push(new THREE.Vector3(x, y, -2));
 
-          // Ticks every 4 steps
-          if (k > 5 && k % 4 === 0) {
-            const dx = Math.cos(a + Math.PI / 2) * 6;
-            const dy = Math.sin(a + Math.PI / 2) * 6;
-            tickPts.push(new THREE.Vector3(x - dx, y - dy, -1.9));
-            tickPts.push(new THREE.Vector3(x + dx, y + dy, -1.9));
+          // Archimedean tangent & normal
+          const tx = b * Math.cos(a) - r * Math.sin(a);
+          const ty = b * Math.sin(a) + r * Math.cos(a);
+          const tl = Math.hypot(tx, ty) || 1;
+          const nx = -ty / tl;
+          const ny = tx / tl;
+
+          for (const s of [-1, 1]) {
+            pos.push(x, y, -2);
+            nrm.push(nx, ny);
+            sides.push(s);
+            ts.push(k / steps);
+            armIdx.push(j);
+          }
+
+          if (k < steps) {
+            const v = k * 2;
+            indices.push(v, v + 1, v + 2, v + 1, v + 3, v + 2);
           }
         }
 
-        const geo = new THREE.BufferGeometry().setFromPoints(pts);
-        const line = new THREE.Line(geo, lineMat);
-        underlayGroup.add(line);
+        const ribbonGeo = new THREE.BufferGeometry();
+        ribbonGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+        ribbonGeo.setAttribute('aN', new THREE.Float32BufferAttribute(nrm, 2));
+        ribbonGeo.setAttribute('aSide', new THREE.Float32BufferAttribute(sides, 1));
+        ribbonGeo.setAttribute('aT', new THREE.Float32BufferAttribute(ts, 1));
+        ribbonGeo.setAttribute('aArm', new THREE.Float32BufferAttribute(armIdx, 1));
+        ribbonGeo.setIndex(indices);
 
-        if (tickPts.length > 0) {
-          const tGeo = new THREE.BufferGeometry().setFromPoints(tickPts);
-          const tSeg = new THREE.LineSegments(tGeo, tickMat);
-          underlayGroup.add(tSeg);
-        }
+        const ribbonMesh = new THREE.Mesh(ribbonGeo, pulseMat);
+        underlayGroup.add(ribbonMesh);
       }
 
-      // Construction Circle around birth radius
+      // Ticks along the outer arms
+      const tickPts = [];
+      for (let j = 0; j < ARMS; j++) {
+        const phase = (j * Math.PI * 2) / ARMS;
+        const steps = 180;
+        for (let k = 30; k <= steps; k += 4) {
+          const t = thetaBirth * 0.4 + (k / steps) * (thetaExit - thetaBirth * 0.4);
+          const r = b * t;
+          const a = t + phase;
+          const x = r * Math.cos(a);
+          const y = r * Math.sin(a);
+          const dx = Math.cos(a + Math.PI / 2) * 7;
+          const dy = Math.sin(a + Math.PI / 2) * 7;
+          tickPts.push(new THREE.Vector3(x - dx, y - dy, -1.9));
+          tickPts.push(new THREE.Vector3(x + dx, y + dy, -1.9));
+        }
+      }
+      const tGeo = new THREE.BufferGeometry().setFromPoints(tickPts);
+      const tMesh = new THREE.LineSegments(tGeo, tickMat);
+      underlayGroup.add(tMesh);
+
+      // Concentric Construction Circle
       const circlePts = [];
-      const cSteps = 64;
+      const cSteps = 72;
       for (let i = 0; i <= cSteps; i++) {
         const ca = (i / cSteps) * Math.PI * 2;
         circlePts.push(new THREE.Vector3(rBirth * Math.cos(ca), rBirth * Math.sin(ca), -2));
       }
       const cGeo = new THREE.BufferGeometry().setFromPoints(circlePts);
-      const cLine = new THREE.Line(cGeo, lineMat);
+      const cLine = new THREE.Line(cGeo, circleMat);
       underlayGroup.add(cLine);
     }
 
     buildUnderlay();
 
-    // 2. Preload Artwork Stills for immediate, rich visuals on every card
+    // 2. Load Artwork Textures & Live Video Textures
     const artworkSources = [
       './assets/images/artcraft-commercial-a1eede0a.png',
       './assets/images/artcraft-sci-fi-4ab5c5c7.png',
@@ -246,7 +386,6 @@
       return tex;
     });
 
-    // Load Video Textures
     const videoSources = [
       './videos/features/WorldLabs_Demo_2.webm',
       './videos/features/Panel.webm',
@@ -257,9 +396,7 @@
       './videos/features/Background.webm'
     ];
 
-    const videoElements = [];
     const videoTextures = [];
-
     videoSources.forEach((src) => {
       const vid = document.createElement('video');
       vid.src = src;
@@ -283,49 +420,10 @@
       tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
       tex.format = THREE.RGBAFormat;
-
-      videoElements.push(vid);
       videoTextures.push(tex);
     });
 
-    // Procedural Fallback Textures for young / loading cards
-    function createProceduralTexture(seed) {
-      const c = document.createElement('canvas');
-      c.width = 256;
-      c.height = 144;
-      const ctx = c.getContext('2d');
-      const grad = ctx.createLinearGradient(0, 0, 256, 144);
-      const hue1 = (seed * 67) % 360;
-      const hue2 = (hue1 + 45) % 360;
-      grad.addColorStop(0, `hsl(${hue1}, 75%, 45%)`);
-      grad.addColorStop(1, `hsl(${hue2}, 85%, 25%)`);
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 256, 144);
-
-      // Fine grid texture
-      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < 256; x += 16) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, 144);
-        ctx.stroke();
-      }
-      for (let y = 0; y < 144; y += 16) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(256, y);
-        ctx.stroke();
-      }
-
-      const tex = new THREE.CanvasTexture(c);
-      tex.minFilter = THREE.LinearFilter;
-      return tex;
-    }
-
-    const proceduralTextures = Array.from({ length: 8 }, (_, i) => createProceduralTexture(i));
-
-    // 3. Card Instances along Spiral
+    // 3. Card Instances
     const cards = [];
     const cardGroup = new THREE.Group();
     galaxyGroup.add(cardGroup);
@@ -334,9 +432,7 @@
 
     for (let i = 0; i < CARD_COUNT; i++) {
       const armIndex = i % ARMS;
-      // Stagger progress from 0 (birth) to 1 (exit)
       const p = (i / CARD_COUNT);
-      // Alternate artwork stills and video textures
       const tex = (i % 2 === 0 && videoTextures.length > 0)
         ? videoTextures[(i / 2) % videoTextures.length]
         : artworkTextures[i % artworkTextures.length];
@@ -389,6 +485,11 @@
       targetScrollY = window.scrollY || 0;
     }, { passive: true });
 
+    // Live Theme Switching Listener
+    window.addEventListener('zetica-theme-change', () => {
+      buildUnderlay();
+    });
+
     // 5. Render Loop
     let lastTime = performance.now();
     let globalAngle = 0;
@@ -400,18 +501,21 @@
       const dt = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
 
-      // Idle conveyor advance: 0.57 cycles per minute
+      // Update pulse time for moving light comets
+      pulseUniforms.uTime.value += dt;
+
+      // Idle conveyor advance: 0.57 cyc/min
       conveyorOffset += (dt * 0.57) / 60;
 
-      // Scroll scrub: 0.2 journeys per 1000px
+      // Scroll scrubbing
       const dScroll = targetScrollY - scrollY;
       scrollY += dScroll * 0.1;
       const scrollConveyor = (scrollY / 1000) * 0.2;
 
-      // Global slow rotation: -50 deg/min
+      // Slow global rotation: -50 deg/min
       globalAngle += dt * (-50 * (Math.PI / 180) / 60);
 
-      // Mouse Parallax with smooth critically damped spring
+      // Mouse Parallax with critical damping
       mouse.x += (mouse.targetX - mouse.x) * (1 - Math.exp(-6 * dt));
       mouse.y += (mouse.targetY - mouse.y) * (1 - Math.exp(-6 * dt));
 
@@ -426,11 +530,10 @@
 
       const dark = isDarkMode();
       const frameCol = dark ? new THREE.Vector3(0.85, 0.85, 0.85) : new THREE.Vector3(0.2, 0.2, 0.2);
-      const bgCol = dark ? new THREE.Vector3(0.05, 0.05, 0.05) : new THREE.Vector3(0.98, 0.98, 0.98);
+      const bgCol = dark ? new THREE.Vector3(0.04, 0.04, 0.04) : new THREE.Vector3(0.98, 0.98, 0.98);
 
       // Update Cards
       cards.forEach((card) => {
-        // Effective journey progress
         let progress = (card.p + conveyorOffset + scrollConveyor) % 1.0;
         if (progress < 0) progress += 1.0;
 
@@ -439,18 +542,13 @@
         const phase = (card.arm * Math.PI * 2) / ARMS;
         const a = theta + phase;
 
-        // Subtle floating noise
         const wobble = Math.sin(now * 0.0015 + card.seed * 2.1) * 6;
         const x = (r + wobble) * Math.cos(a);
         const y = (r + wobble) * Math.sin(a);
 
         card.mesh.position.set(x, y, 10 + progress * 20);
-
-        // Cards stay upright relative to the screen (counter-rotate globalAngle)
         card.mesh.rotation.z = -globalAngle;
 
-        // Sizing & Aspect ratio morphing
-        // Newborn cards: square (1:1) and small (~70px); outer cards: 16:9 and large (~280px)
         const aspectFrac = Math.min(1.0, progress / 0.25);
         const currentAspect = 1.0 + aspectFrac * (16 / 9 - 1.0);
         const baseH = 65 + progress * 140;
@@ -458,17 +556,14 @@
 
         card.mesh.scale.set(baseW, baseH, 1);
 
-        // Blur & Aberration
         const blurFrac = Math.max(0, 1.0 - progress / 0.22);
         const uBlur = blurFrac * 0.12;
         const uAber = (1.0 - blurFrac) * 0.035;
 
-        // Alpha fade at extreme edges
         let alpha = 1.0;
         if (progress < 0.05) alpha = progress / 0.05;
         if (progress > 0.85) alpha = Math.max(0, 1.0 - (progress - 0.85) / 0.15);
 
-        // Uniforms
         const u = card.mat.uniforms;
         u.uBg.value = bgCol;
         u.uBlur.value = uBlur;
@@ -477,7 +572,6 @@
         u.uSize.value.set(baseW, baseH);
         u.uFrameCol.value = frameCol;
 
-        // Local mouse warp
         const dx = (mouse.x - x) / baseW;
         const dy = (mouse.y - y) / baseH;
         u.uMouse.value.set(dx, dy);
