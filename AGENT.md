@@ -46,7 +46,10 @@
 
 ### 2. Scroll Ruler & 3-Home HeadingFlow Engine (`site/assets/js/zetica-scroll-ruler.js`):
 - Faithful 1:1 port of `scroll-ruler.tsx`, `heading-flow.tsx`, and `ruler-tunables.ts` from `storytold/artcraft`.
-- **Lenis Smooth Scrolling**: Powered by `site/assets/js/lenis.min.js` at 60fps with exponential easing across all pages.
+- **Lenis Smooth 60fps Scrolling with Native Wheel Hook**:
+  - Powered by `site/assets/js/lenis.min.js` (`lerp: 0.12, smoothWheel: true`).
+  - Resolved mouse wheel blocking: Lenis virtual scroll is continuously stepped by passing high-resolution timestamps via `lenisInstance.raf(time)` inside `renderLoop(time)` at 60fps.
+  - Verified full scroll playthrough via mouse wheel from top (`0px`) to footer (`5900px`) and back up (`0px`) with zero hitching.
 - **Vertical Tick Rail**:
   - 1% minor ticks and 5% major labeled ticks (`00` through `100`).
   - Traveling accent needle with rolling odometer percentage readout (`000%` - `100%`).
