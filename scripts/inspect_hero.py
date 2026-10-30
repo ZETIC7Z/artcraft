@@ -1,9 +1,12 @@
-import re
+import sys
 
-with open('site/index.html', 'r', encoding='utf-8') as f:
-    text = f.read()
+sys.stdout.reconfigure(encoding='utf-8')
 
-idx = text.find('Capable tools')
+with open(r'c:\Users\ZETICUZ\Documents\artcraft\site\index.html', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+idx = content.find('id="hero-wordmark-masthead"')
 if idx != -1:
-    print("=== Context before Capable tools ===")
-    print(text[max(0, idx - 1200):idx + 200])
+    print(content[idx:idx+1500])
+else:
+    print("Not found")
