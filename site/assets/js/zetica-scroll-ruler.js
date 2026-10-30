@@ -61,7 +61,7 @@
   const SECTIONS_CONFIG = [
     { id: 'hero', label: 'ZETICA', isHero: true },
     { id: 'apps', label: 'ZETICA APPS' },
-    { id: 'studio', label: 'ZETICA STUDIO', href: './download.html' },
+    { id: 'studio', label: 'ZETICA STUDIO' },
     { id: 'features', label: 'FEATURES' },
     { id: 'ownership', label: 'OWNERSHIP' },
     { id: 'made-with', label: 'COMMUNITY', alias: 'community' },
@@ -327,7 +327,23 @@
     flowContainer.className = 'zetica-heading-flow pointer-events-none fixed inset-0 z-40';
     document.body.appendChild(flowContainer);
 
-    const lenisInstance = window.__lenis || (window.Lenis ? new window.Lenis() : null);
+    let lenisInstance = window.__lenis;
+    if (!lenisInstance && typeof window.Lenis !== 'undefined') {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reducedMotion) {
+        try {
+          lenisInstance = new window.Lenis({
+            lerp: 0.12,
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.2,
+            smoothWheel: true
+          });
+          window.__lenis = lenisInstance;
+        } catch (err) {
+          console.warn('[ZETICA] Lenis init fallback to native scroll', err);
+        }
+      }
+    }
 
     const sectionDOMRefs = measuredSections.map((s) => {
       if (s.isHero) {
@@ -396,7 +412,10 @@
     let prevPct = -1;
 
     // I. Animation Frame Loop (1:1 ArtCraft HeadingFlow Execution)
-    function renderLoop() {
+    function renderLoop(time) {
+      if (lenisInstance && typeof lenisInstance.raf === 'function') {
+        lenisInstance.raf(time);
+      }
       const docH = document.documentElement.scrollHeight;
       const vh = window.innerHeight;
       const vw = window.innerWidth;
