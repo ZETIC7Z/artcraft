@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="chassisGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#231A28" />
+      <stop offset="50%" stop-color="#150E1A" />
+      <stop offset="100%" stop-color="#09060B" />
+    </linearGradient>
+    <linearGradient id="cinemaRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F472B6" />
+      <stop offset="40%" stop-color="#C026D3" />
+      <stop offset="80%" stop-color="#7E22CE" />
+      <stop offset="100%" stop-color="#3B0764" />
+    </linearGradient>
+    <linearGradient id="cameraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F472B6" />
+      <stop offset="50%" stop-color="#A21CAF" />
+      <stop offset="100%" stop-color="#581C87" />
+    </linearGradient>
+    <filter id="glowShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#000000" flood-opacity="0.8" />
+      <feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#C026D3" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="200" fill="#A21CAF" opacity="0.18" />
+  <rect x="36" y="36" width="440" height="440" rx="108" fill="url(#chassisGrad)" stroke="url(#cinemaRim)" stroke-width="6" filter="url(#glowShadow)" />
+  <rect x="42" y="42" width="428" height="428" rx="102" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="2" />
+
+  <!-- Cinema Camera & Film Reels Glyph -->
+  <g id="ZeticaCinemaGlyph" filter="url(#glowShadow)">
+    <!-- Film Reel 1 (Left) -->
+    <circle cx="205" cy="170" r="42" fill="none" stroke="url(#cameraGrad)" stroke-width="12" />
+    <circle cx="205" cy="170" r="12" fill="url(#cameraGrad)" />
+    <!-- Film Reel 2 (Right) -->
+    <circle cx="285" cy="170" r="42" fill="none" stroke="url(#cameraGrad)" stroke-width="12" />
+    <circle cx="285" cy="170" r="12" fill="url(#cameraGrad)" />
+
+    <!-- Camera Body -->
+    <rect x="150" y="225" width="165" height="110" rx="16" fill="url(#cameraGrad)" />
+
+    <!-- Lens Cone -->
+    <polygon points="315,245 385,210 385,315 315,285" fill="url(#cameraGrad)" />
+
+    <!-- Tripod Mount / Viewfinder Accent -->
+    <rect x="190" y="340" width="85" height="12" rx="6" fill="#F472B6" />
+    <line x1="205" y1="352" x2="175" y2="385" stroke="#F472B6" stroke-width="8" stroke-linecap="round" />
+    <line x1="260" y1="352" x2="290" y2="385" stroke="#F472B6" stroke-width="8" stroke-linecap="round" />
+  </g>
+
+  <text x="256" y="440" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800" letter-spacing="6" fill="#F472B6" text-anchor="middle">ZETICA CINEMA</text>
+</svg>

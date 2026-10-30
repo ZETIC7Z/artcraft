@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="chassisGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#182335" />
+      <stop offset="50%" stop-color="#0E1624" />
+      <stop offset="100%" stop-color="#060A12" />
+    </linearGradient>
+    <linearGradient id="cadRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93C5FD" />
+      <stop offset="40%" stop-color="#3B82F6" />
+      <stop offset="80%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#172554" />
+    </linearGradient>
+    <linearGradient id="cubeTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BFDBFE" />
+      <stop offset="100%" stop-color="#60A5FA" />
+    </linearGradient>
+    <linearGradient id="cubeLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="cubeRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1E3A8A" />
+    </linearGradient>
+    <filter id="glowShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#000000" flood-opacity="0.8" />
+      <feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#3B82F6" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="200" fill="#3B82F6" opacity="0.18" />
+  <rect x="36" y="36" width="440" height="440" rx="108" fill="url(#chassisGrad)" stroke="url(#cadRim)" stroke-width="6" filter="url(#glowShadow)" />
+  <rect x="42" y="42" width="428" height="428" rx="102" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="2" />
+
+  <!-- 3D Isometric CAD Cube Glyph -->
+  <g id="ZeticaDimensionGlyph" filter="url(#glowShadow)">
+    <!-- Top Face -->
+    <polygon points="256,130 355,185 256,240 157,185" fill="url(#cubeTop)" stroke="#0E1624" stroke-width="5" />
+    <!-- Left Face -->
+    <polygon points="157,185 256,240 256,350 157,295" fill="url(#cubeLeft)" stroke="#0E1624" stroke-width="5" />
+    <!-- Right Face -->
+    <polygon points="256,240 355,185 355,295 256,350" fill="url(#cubeRight)" stroke="#0E1624" stroke-width="5" />
+
+    <!-- Isometric Internal Grid Subdivision Lines -->
+    <line x1="206" y1="157" x2="305" y2="212" stroke="#93C5FD" stroke-width="3" opacity="0.6" />
+    <line x1="305" y1="157" x2="206" y2="212" stroke="#93C5FD" stroke-width="3" opacity="0.6" />
+    <line x1="206" y1="212" x2="206" y2="322" stroke="#93C5FD" stroke-width="3" opacity="0.6" />
+    <line x1="305" y1="212" x2="305" y2="322" stroke="#93C5FD" stroke-width="3" opacity="0.6" />
+  </g>
+
+  <text x="256" y="440" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800" letter-spacing="6" fill="#60A5FA" text-anchor="middle">ZETICA DIMENSION</text>
+</svg>
