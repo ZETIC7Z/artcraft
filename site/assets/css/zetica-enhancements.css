@@ -1,5 +1,6 @@
 /* ==========================================================================
-   ZETICA Theme & Motion Enhancements
+   ZETICA Theme, Scroll Ruler & Motion Enhancements
+   Faithful 1:1 implementation matching storytold/artcraft
    ========================================================================== */
 
 /* 1. Logo Inversion for Light / Dark Mode */
@@ -18,7 +19,60 @@ html[data-theme="dark"] #wm-letter-0 img {
   filter: invert(1) brightness(2) contrast(1.1);
 }
 
-/* 2. Scroll Ruler Instrument Container & Layout */
+/* 2. Interactive Resources Dropdown Menu in Navbar */
+.zetica-resources-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 170px;
+  background: var(--bg, #0b0b0c);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
+  display: none;
+  flex-direction: column;
+  padding: 6px 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.zetica-resources-dropdown.open {
+  display: flex;
+}
+
+.resources-dropdown-item {
+  font-family: var(--font-archivo-mono), 'Space Mono', monospace, ui-monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 10px 18px;
+  color: var(--muted, #a1a1aa);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  display: block;
+}
+
+.resources-dropdown-item:hover {
+  color: var(--ink, #ffffff);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .zetica-resources-dropdown {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .resources-dropdown-item {
+  color: #71717a;
+}
+
+[data-theme="light"] .resources-dropdown-item:hover {
+  color: #09090b;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* 3. Scroll Ruler Instrument Container & Layout */
 .zetica-ruler-instrument {
   position: fixed;
   right: 0;
@@ -36,8 +90,8 @@ html[data-theme="dark"] #wm-letter-0 img {
   inset: 0;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.7) 40%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.7) 40%, transparent 100%);
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.6) 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.6) 40%, transparent 100%);
   pointer-events: none;
 }
 
@@ -68,12 +122,12 @@ html[data-theme="dark"] #wm-letter-0 img {
 
 .ruler-tick-row.minor .ruler-tick-line {
   width: 6px;
-  opacity: 0.22;
+  opacity: 0.24;
 }
 
 .ruler-tick-row.major .ruler-tick-line {
   width: 14px;
-  opacity: 0.65;
+  opacity: 0.7;
 }
 
 .ruler-tick-label {
@@ -83,12 +137,13 @@ html[data-theme="dark"] #wm-letter-0 img {
   transform: translateY(-50%);
   font-family: var(--font-archivo-mono), 'Space Mono', monospace, ui-monospace;
   font-size: 9px;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  opacity: 0.55;
+  opacity: 0.6;
   color: currentColor;
 }
 
-/* 3. Needle & Odometer Digits */
+/* 4. Active Traveling Needle & Odometer Digits */
 .ruler-needle {
   position: absolute;
   right: 0;
@@ -142,7 +197,7 @@ html[data-theme="dark"] #wm-letter-0 img {
   display: block;
 }
 
-/* 4. HeadingFlow Letters & Transitions */
+/* 5. HeadingFlow Letters & Transitions */
 .zetica-heading-flow {
   position: fixed;
   inset: 0;
@@ -170,6 +225,7 @@ html[data-theme="dark"] #wm-letter-0 img {
   will-change: transform, opacity;
   user-select: none;
   transition: color 0.15s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
 .flow-word-hit {
@@ -190,14 +246,14 @@ html[data-theme="dark"] #wm-letter-0 img {
   background: rgba(0, 0, 0, 0.04);
 }
 
-/* 5. Theme Palette Tuning for Ruler & Typography */
+/* 6. Theme Colors & Typography Contrast */
 [data-theme="dark"] .flow-letter {
   color: #a1a1aa;
 }
 
 [data-theme="dark"] .flow-letter.active {
   color: #ffffff !important;
-  text-shadow: 0 0 16px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 [data-theme="light"] .flow-letter {
@@ -235,7 +291,7 @@ html[data-theme="dark"] #wm-letter-0 img {
   color: #0284c7;
 }
 
-/* 6. Hero Scrim & Readability */
+/* 7. Hero Scrim & Readability */
 .hero-scrim-pocket {
   position: absolute;
   inset: -100px -140px;

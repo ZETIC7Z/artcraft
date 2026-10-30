@@ -45,18 +45,29 @@
 - **Theme Reactivity**: Listens to `zetica-theme-change` to instantly swap background and line colors between dark obsidian (`#040404`) and clean paper light (`#fafaf9`).
 
 ### 2. Scroll Ruler & 3-Home HeadingFlow Engine (`site/assets/js/zetica-scroll-ruler.js`):
-- Faithful port of `scroll-ruler.tsx`, `heading-flow.tsx`, and `ruler-tunables.ts`.
-- **Lenis Smooth Scrolling**: Powered by `site/assets/js/lenis.min.js` at 60fps with exponential easing.
+- Faithful 1:1 port of `scroll-ruler.tsx`, `heading-flow.tsx`, and `ruler-tunables.ts` from `storytold/artcraft`.
+- **Lenis Smooth Scrolling**: Powered by `site/assets/js/lenis.min.js` at 60fps with exponential easing across all pages.
 - **Vertical Tick Rail**:
   - 1% minor ticks and 5% major labeled ticks (`00` through `100`).
   - Traveling accent needle with rolling odometer percentage readout (`000%` - `100%`).
   - Clicking any point on the rail jumps smoothly to that scroll percentage using Lenis.
-- **3-Home Lifecycle per Section**:
-  1. **Bottom Queue**: Flush right-aligned compact links stacked at bottom-right (`ZETICA APPS`, `ZETICA STUDIO`, `FEATURES`, `OWNERSHIP`, `COMMUNITY`, `GET STARTED`).
-  2. **Riding Rail**: Vertically riding words with letters rotated -90 degrees on the right tick rail tracking document scroll 1:1.
-  3. **Top Stack**: Stacked compact titles under the top navbar (`ZETICA`, `ZETICA APPS`, `ZETICA STUDIO`), with the active section heading rendered in bold 32px display type.
-- **Hero Wordmark Flight**: `ZETICA` glides smoothly from center hero into the top stack slot via an inward-curved quadratic bezier arc as scroll advances from 20px to 340px.
-- Deployed across all 40 HTML pages.
+- **Permanent Elimination of White Box in Top-Right Corner**:
+  - Cloned static SSR HTML contained pre-baked `<div role="scrollbar">` elements with light-mode backgrounds.
+  - Successfully purged via `scripts/remove_dead_scrollbars.py` across all 39 static HTML pages in `site/` and synchronized to UNCAGE output.
+- **Zero-Duplicate Hero Wordmark Flight**:
+  - Eliminated clone `.flow-word-box[data-label="ZETICA"]`.
+  - Animates the *actual* `#hero-wordmark-masthead` letter spans (`#wm-letter-0` to `#wm-letter-6`) directly in viewport space.
+  - At scroll 0, letters sit naturally with zero clones; from scroll 20px to 320px, they glide smoothly along an inward quadratic bezier curve straight to the top stack slot.
+- **Exact ArtCraft Typography & Metrics (`src_ref/ruler-tunables.ts`)**:
+  - Active Section Heading: **`34px`** display type, `font-weight: 800`, active bright ink (`#FFFFFF` in dark, `#09090b` in light) with crisp contrast drop shadow.
+  - Riding Word on Rail: **`20px`** uppercase, `font-weight: 700`, rotated `-90deg` along the tick line.
+  - Stacked Headings & Bottom Queue: **`16px`** bold uppercase (`font-weight: 700`), letter-spacing `0.04em`.
+  - Slot Spacing: `22px`; gap to active heading: `28px`.
+  - Right Alignment: Flush right to guide line `vw - (railW + textPad)` (24px inset from 60px rail).
+- **Interactive Resources Dropdown in Navbar**:
+  - Added interactive hover & click dropdown with a 180ms debounce grace period to the Resources button in the header nav.
+  - Links to `./tutorials.html`, `./news.html`, `./faq.html`, and `./press-kit.html`.
+  - Frosted blur background, crisp 1px borders, and auto-inverting text colors matching active theme.
 
 ### 3. Light / Dark Mode Toggle (`site/assets/js/zetica-theme.js` & `site/assets/css/zetica-enhancements.css`):
 - Interactively toggles theme via moon/sun navigation button.
@@ -67,11 +78,13 @@
 ---
 
 ## 4. Live Browser Verification Artifacts
-Captured and verified in Microsoft Edge:
-- `branding/verification/live_dark_scroll_0.png`: Dark mode resting hero with white ZE monogram, center `ZETICA`, and bottom-right queue.
-- `branding/verification/live_dark_scroll_350.png`: `ZETICA` wordmark transferring into top-right stack and `ZETICA APPS` riding vertically on right tick rail.
-- `branding/verification/live_dark_scroll_1000.png`: `ZETICA APPS` active heading in 32px bold, `ZETICA` stacked at top, and `ZETICA STUDIO` riding rail.
-- `branding/verification/live_dark_scroll_features.png`: `FEATURES` section active, stacked titles at top-right (`ZETICA`, `ZETICA APPS`, `ZETICA STUDIO`), cyan needle at 34%, and bottom queue.
-- `branding/verification/live_light_scroll_features.png`: Clean paper light mode with black typography, black ZE monogram, and cobalt accent needle.
-- `branding/verification/live_light_scroll_0.png`: Light mode hero with black ZE monogram, neon pulses, and bottom-right queue.
-- `branding/verification/footer_verification.png`: Sam Pangilinan footer attribution standard and interactive button.
+Captured and verified in Microsoft Edge and Chromium with 0 PageErrors:
+- `branding/verification/perfect_dark_scroll_0.png`: Dark mode resting hero with white ZE monogram, center `ZETICA`, zero duplicate text, zero white boxes in the top-right corner, and bottom-right queue.
+- `branding/verification/verified_resources_hover.png`: Interactive Resources dropdown open showing `TUTORIALS`, `NEWS`, `FAQ`, and `PRESS KIT`.
+- `branding/verification/perfect_resources_dropdown_dark.png`: High-contrast dark mode Resources dropdown under the navbar.
+- `branding/verification/perfect_dark_scroll_350.png`: Actual `ZETICA` wordmark letters in flight into the top-right stack, with `ZETICA APPS` riding vertically along the tick rail.
+- `branding/verification/perfect_dark_scroll_features.png`: `FEATURES` active in 34px bold display type, `ZETICA`, `ZETICA APPS`, `ZETICA STUDIO` stacked at top-right, cyan needle at 34%, and bottom queue.
+- `branding/verification/perfect_dark_scroll_community.png`: `COMMUNITY` active in 34px bold display type (matching user reference image 2), `GET STARTED` riding rail, needle at 083%.
+- `branding/verification/perfect_light_scroll_features.png`: Clean paper light mode with black typography, black ZE monogram, and sky blue accent needle.
+- `branding/verification/footer_verification.png`: Sam Pangilinan footer attribution standard and interactive developer portfolio button.
+
