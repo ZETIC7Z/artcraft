@@ -1,14 +1,9 @@
 import re
 
-index_path = r"C:\Users\ZETICUZ\Documents\UNCAGE\output\getartcraft.com\index.html"
-with open(index_path, "r", encoding="utf-8") as f:
-    html = f.read()
+with open('site/index.html', 'r', encoding='utf-8') as f:
+    text = f.read()
 
-# Let's search for "ARTCRAFT" or "Capable tools" in index.html
-pos = html.find("Capable tools")
-if pos != -1:
-    print("Found 'Capable tools' around pos:", pos)
-    print("Context (before 500, after 1000):")
-    print(html[max(0, pos-500):pos+1000])
-else:
-    print("Not found 'Capable tools'")
+idx = text.find('Capable tools')
+if idx != -1:
+    print("=== Context before Capable tools ===")
+    print(text[max(0, idx - 1200):idx + 200])
