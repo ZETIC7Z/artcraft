@@ -1,82 +1,65 @@
 /**
- * ZETICA Scroll Ruler & 3-Home HeadingFlow Engine
- * Senior Web Engineering Architecture — Faithful 1:1 Port of storytold/artcraft
- * 
- * Features:
- * 1. Lenis Smooth Scrolling at 60fps with exponential easing
- * 2. Precision Vertical Scroll Ruler with 1% minor & 5% major ticks + rolling odometer readout
- * 3. 3-Home HeadingFlow Lifecycle:
- *    - Bottom Queue: 16px bold uppercase links, flush right-aligned to rightGuideX
- *    - Riding Rail: 20px bold uppercase words, rotated -90deg riding vertically on tick rail 1:1 with scroll
- *    - Top Stack: 16px past sections stacked under navbar, and current active heading in 34px bold display type
- * 4. Hero Wordmark Flight: The ACTUAL #hero-wordmark-masthead letters glide smoothly into top-right stack
- *    (Zero duplicate text elements anywhere!)
- * 5. Interactive Resources dropdown in top nav
- * 6. Dynamic Light/Dark theme responsiveness with full contrast protection
+ * ZETICA Scroll-Ruler Instrument & Floating Typography Flight System
+ * Faithful 1:1 port of storytold/artcraft ruler-layout, ruler-motion, and heading-flow.
+ *
+ * Coordinates:
+ * 1. Precision 0-100% tick rail and odometer needle on the right edge.
+ * 2. Hero wordmark "ZETICA" (pure text, 6 letters) flight into slot 0 of the top stack.
+ * 3. Bottom queue of upcoming section titles, horizontal-to-vertical rail morph,
+ *    and vertical-to-horizontal flip into active 34px headings and 16px compact stack rows.
+ * 4. Exact 16px unified font size and 20px slot spacing for all stacked and queued titles.
  */
 
 (function () {
   'use strict';
 
+  // 1. Desktop & Motion Capability Checks
   function isDesktop() {
-    return window.innerWidth >= 1024 && !/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    const hasPointer = window.matchMedia('(pointer: fine) and (hover: hover) and (min-width: 1024px)').matches;
+    return !isMobile && hasPointer;
   }
 
-  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
-  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-
-  // 1. Initialize Lenis Smooth Scroll
-  let lenisInstance = null;
-  function initLenis() {
-    if (typeof Lenis !== 'undefined' && !lenisInstance) {
-      lenisInstance = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
-        wheelMultiplier: 1.05,
-        touchMultiplier: 1.8,
-      });
-      window.__lenis = lenisInstance;
-
-      function raf(time) {
-        lenisInstance.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-    }
+  function clamp01(v) {
+    return Math.max(0, Math.min(1, v));
   }
 
-  // 2. Metrics Matching storytold/artcraft ruler-tunables.ts
+  function easeInOutCubic(v) {
+    return v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2;
+  }
+
+  // 2. Exact ArtCraft Layout & Motion Tunables
   const NAV_H = 48;
+
   const LAYOUT = {
-    edgePad: 12,
-    railW: 60,
-    textPad: 24,       // breathing space from rail line to flush right text
-    minorPct: 1,
-    labelPct: 5,
-    thresholdPct: 12,  // 12% vh flip threshold line
-    headingPx: 34,     // Active section heading size (matches ArtCraft 34px)
-    ridingPx: 20,      // Vertical riding text on rail (matches ArtCraft 20px)
-    queuePx: 16,       // Stacked titles and queue size (matches ArtCraft 16px)
-    topPad: 28,        // Distance below navbar to first stacked title
-    currentGap: 28,    // Space between compact stack and 34px active heading
-    queueSlot: 22,     // Distance between stacked rows
-    queuePad: 36       // Bottom margin for queue
+    railW: 60,         // Width of the tick rail at viewport edge
+    textPad: 0,        // Horizontal gap between tick rail and heading text (ArtCraft = 0)
+    edgePad: 12,       // Inset from navbar and viewport bottom
+    minorPct: 1,       // Tick every 1%
+    labelPct: 5,       // Major labeled tick every 5%
+    thresholdPct: 12,  // 12vh flip line
+    headingPx: 34,     // Active section heading size (34px)
+    ridingPx: 20,      // Vertical riding text on rail (20px)
+    queuePx: 16,       // Stacked titles and queue size (16px)
+    topPad: 28,        // Distance below navbar to first stacked title (28px)
+    currentGap: 26,    // Extra gap separating 34px active heading from compact stack (26px)
+    queueSlot: 20,     // Vertical spacing between stacked titles (20px)
+    queuePad: 36,      // Bottom margin for queue (36px)
+    queueAlpha: 0.38   // Opacity of inactive queue / stack items
   };
 
   const MOTION = {
-    flipZone: 220,
-    detachZone: 240,
-    stagger: 0.14,
-    arc: 36,
-    heroStart: 20,
-    heroZone: 320
+    flipZone: 200,     // Scroll distance over which vertical-to-horizontal flip plays out
+    detachZone: 240,   // Scroll distance over which queued heading morphs onto rail
+    stagger: 0.16,     // Letter stagger fraction
+    arc: 28,           // Inward curve flight arc (28px)
+    heroLead: 100,     // Scroll offset before hero flight triggers
+    heroZone: 320      // Scroll distance for hero wordmark flight
   };
 
-  // Section roster (Hero is handled by driving actual masthead letters directly)
+  // Section Roster (Hero is index 0, followed by sections present in DOM)
   const SECTIONS_CONFIG = [
+    { id: 'hero', label: 'ZETICA', isHero: true },
     { id: 'apps', label: 'ZETICA APPS' },
     { id: 'studio', label: 'ZETICA STUDIO', href: './download.html' },
     { id: 'features', label: 'FEATURES' },
@@ -94,26 +77,35 @@
     };
   }
 
-  let measureCtx = null;
-  function getWordMetrics(text, fontPx) {
-    if (!measureCtx) {
-      const c = document.createElement('canvas');
-      measureCtx = c.getContext('2d');
+  // 3. Exact Subpixel Letter Measurement (Direct DOM, No Canvas Var Failure)
+  function measureLabels(labels) {
+    const div = document.createElement('div');
+    div.className = 'font-display';
+    div.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;white-space:pre;font-size:100px;line-height:1;font-weight:620;letter-spacing:normal;font-family:var(--font-archivo), "Space Grotesk", system-ui, sans-serif;';
+    document.body.appendChild(div);
+
+    const metrics = {};
+    for (const label of labels) {
+      div.textContent = '';
+      const adv = label.split('').map((ch) => {
+        const span = document.createElement('span');
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        div.appendChild(span);
+        return span.getBoundingClientRect().width / 100;
+      });
+      const cum = [];
+      let total = 0;
+      for (const w of adv) {
+        cum.push(total);
+        total += w;
+      }
+      metrics[label] = { adv, cum, total };
     }
-    measureCtx.font = `800 ${fontPx}px var(--font-archivo), "Space Grotesk", sans-serif`;
-    const adv = [];
-    const cum = [];
-    let cur = 0;
-    for (let i = 0; i < text.length; i++) {
-      cum.push(cur);
-      const w = measureCtx.measureText(text[i]).width;
-      adv.push(w / fontPx);
-      cur += w / fontPx;
-    }
-    return { adv, cum, total: cur };
+    div.remove();
+    return metrics;
   }
 
-  // 3. Interactive Resources Dropdown in Navbar
+  // 4. Interactive Resources Dropdown in Navbar
   function initResourcesDropdown() {
     const trigger = document.querySelector('button[id*="trigger"][id*="ailb"], button:has(svg.lucide-chevron-down)');
     if (!trigger) return;
@@ -182,21 +174,21 @@
     });
   }
 
-  // 4. Main Instrument Initialization
+  // 5. Main Instrument & Typography Flight Engine
   function initInstrument() {
     if (!isDesktop()) return;
 
-    // Clean up any duplicate elements
-    const oldQueue = document.getElementById('ruler-bottom-queue');
-    if (oldQueue) oldQueue.remove();
-
-    if (document.getElementById('zetica-ruler-instrument')) return;
+    // Clean up any stale instances
+    const oldInstrument = document.getElementById('zetica-ruler-instrument');
+    if (oldInstrument) oldInstrument.remove();
+    const oldFlow = document.getElementById('zetica-heading-flow');
+    if (oldFlow) oldFlow.remove();
 
     document.documentElement.dataset.ruler = 'on';
     document.documentElement.dataset.rulerSide = 'right';
     document.documentElement.style.setProperty('--ruler-rail', `${LAYOUT.railW}px`);
 
-    // A. Create Ruler Rail Container
+    // A. Ruler Rail Container
     const rulerContainer = document.createElement('div');
     rulerContainer.id = 'zetica-ruler-instrument';
     rulerContainer.className = 'zetica-ruler-instrument';
@@ -227,33 +219,7 @@
     rulerContainer.appendChild(needle);
     document.body.appendChild(rulerContainer);
 
-    // B. Create HeadingFlow Container (Only for non-hero words!)
-    const flowContainer = document.createElement('div');
-    flowContainer.id = 'zetica-heading-flow';
-    flowContainer.className = 'zetica-heading-flow';
-    document.body.appendChild(flowContainer);
-
-    // Measure Sections
-    const measuredSections = [];
-    SECTIONS_CONFIG.forEach((cfg) => {
-      let el = document.getElementById(cfg.id);
-      if (!el && cfg.alias) el = document.getElementById(cfg.alias);
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        const anchor = rect.top + window.scrollY;
-        measuredSections.push({
-          id: cfg.id,
-          label: cfg.label,
-          el,
-          anchor,
-          bottom: rect.bottom + window.scrollY,
-          metrics: getWordMetrics(cfg.label, LAYOUT.headingPx),
-          href: cfg.href
-        });
-      }
-    });
-
-    // Populate Ticks inside TickTrack
+    // B. Build Ticks inside TickTrack
     const docH = document.documentElement.scrollHeight;
     for (let p = 0; p <= 100; p += LAYOUT.minorPct) {
       const isMajor = p % LAYOUT.labelPct === 0;
@@ -274,73 +240,138 @@
       tickTrack.appendChild(tickRow);
     }
 
-    // Build DOM for non-hero words only
-    const wordRefs = [];
-    measuredSections.forEach((s) => {
-      const wordBox = document.createElement('div');
-      wordBox.className = 'flow-word-box';
-      wordBox.dataset.label = s.label;
-
-      const letterEls = [];
-      for (let i = 0; i < s.label.length; i++) {
-        const ch = s.label[i];
-        const span = document.createElement('span');
-        span.className = 'flow-letter';
-        span.textContent = ch === ' ' ? '\u00A0' : ch;
-        wordBox.appendChild(span);
-        letterEls.push(span);
+    // C. Measure Sections in DOM
+    const measuredSections = [];
+    SECTIONS_CONFIG.forEach((cfg) => {
+      if (cfg.isHero) {
+        measuredSections.push({
+          id: cfg.id,
+          label: cfg.label,
+          isHero: true,
+          anchor: 0,
+          bottom: window.innerHeight,
+          href: '#hero'
+        });
+        return;
       }
-
-      const hit = document.createElement('a');
-      hit.className = 'flow-word-hit';
-      hit.href = s.href || `#${s.id}`;
-      hit.setAttribute('aria-label', s.label);
-      hit.addEventListener('click', (e) => {
-        if (s.href && !s.href.startsWith('#')) return;
-        e.preventDefault();
-        const targetEl = document.getElementById(s.id) || (s.alias ? document.getElementById(s.alias) : null);
-        if (targetEl) {
-          if (lenisInstance) {
-            lenisInstance.scrollTo(targetEl, { duration: 1.2 });
-          } else {
-            targetEl.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      });
-      wordBox.appendChild(hit);
-
-      flowContainer.appendChild(wordBox);
-      wordRefs.push({ wordBox, letterEls, hit });
+      let el = document.getElementById(cfg.id);
+      if (!el && cfg.alias) el = document.getElementById(cfg.alias);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const anchor = rect.top + window.scrollY;
+        measuredSections.push({
+          id: cfg.id,
+          label: cfg.label,
+          isHero: false,
+          el,
+          anchor,
+          bottom: rect.bottom + window.scrollY,
+          href: cfg.href || `#${cfg.id}`
+        });
+      }
     });
 
-    // Measure the ACTUAL hero wordmark letters directly
+    // D. Compute Exact Metrics for All Labels
+    let labelMetrics = measureLabels(measuredSections.map(s => s.label));
+
+    // E. Measure Actual Hero Masthead Letters
     const heroMasthead = document.getElementById('hero-wordmark-masthead');
     const heroLetters = heroMasthead ? Array.from(heroMasthead.querySelectorAll('.wm-letter')) : [];
     let heroBaseMetrics = null;
 
     function measureHeroLetters() {
       if (!heroMasthead || !heroLetters.length) return;
-      // Temporarily remove transform to measure natural rest geometry
       const savedTransforms = heroLetters.map(el => el.style.transform);
       heroLetters.forEach(el => el.style.transform = '');
 
       const rects = heroLetters.map(el => el.getBoundingClientRect());
       const scrollY = window.scrollY || 0;
+      const cs = window.getComputedStyle(heroLetters[0] || heroMasthead);
+      const fontPx = parseFloat(cs.fontSize) || 72;
+
+      const adv = rects.map(r => r.width / fontPx);
+      const cum = [];
+      let total = 0;
+      for (const w of adv) {
+        cum.push(total);
+        total += w;
+      }
+
       heroBaseMetrics = {
+        els: heroLetters,
         baseX: rects.map(r => r.left + r.width / 2),
         baseDocY: rects.map(r => r.top + scrollY + r.height / 2),
-        widths: rects.map(r => r.width),
-        totalWidth: heroMasthead.clientWidth,
-        fontPx: parseFloat(window.getComputedStyle(heroMasthead).fontSize) || 72
+        fontPx,
+        metrics: { adv, cum, total }
       };
 
-      // Restore
       heroLetters.forEach((el, idx) => el.style.transform = savedTransforms[idx]);
     }
     measureHeroLetters();
-    window.addEventListener('resize', measureHeroLetters);
 
-    // C. Click on rail jumps to progress
+    // Re-measure on window resize and font load
+    window.addEventListener('resize', () => {
+      labelMetrics = measureLabels(measuredSections.map(s => s.label));
+      measureHeroLetters();
+    });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        labelMetrics = measureLabels(measuredSections.map(s => s.label));
+        measureHeroLetters();
+      });
+    }
+
+    // F. Create HeadingFlow Container & Non-Hero Letter Spans
+    const flowContainer = document.createElement('div');
+    flowContainer.id = 'zetica-heading-flow';
+    flowContainer.className = 'zetica-heading-flow pointer-events-none fixed inset-0 z-40';
+    document.body.appendChild(flowContainer);
+
+    const lenisInstance = window.__lenis || (window.Lenis ? new window.Lenis() : null);
+
+    const sectionDOMRefs = measuredSections.map((s) => {
+      if (s.isHero) {
+        return { isHero: true, letterEls: heroLetters, hit: null };
+      }
+
+      const letterEls = [];
+      for (let i = 0; i < s.label.length; i++) {
+        const ch = s.label[i];
+        const span = document.createElement('span');
+        span.className = 'flow-letter font-display absolute top-0 left-0 whitespace-pre text-ink-strong';
+        span.setAttribute('aria-hidden', 'true');
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        span.style.fontSize = `${LAYOUT.headingPx}px`;
+        span.style.lineHeight = '1';
+        span.style.opacity = '0';
+        span.style.willChange = 'transform, opacity';
+        flowContainer.appendChild(span);
+        letterEls.push(span);
+      }
+
+      const hit = document.createElement('a');
+      hit.className = 'flow-word-hit pointer-events-auto absolute cursor-pointer';
+      hit.href = s.href || `#${s.id}`;
+      hit.setAttribute('aria-label', `Jump to ${s.label}`);
+      hit.addEventListener('click', (e) => {
+        if (s.href && !s.href.startsWith('#')) return;
+        e.preventDefault();
+        const targetEl = s.el || document.getElementById(s.id);
+        if (targetEl) {
+          const targetY = targetEl.getBoundingClientRect().top + window.scrollY - NAV_H;
+          if (lenisInstance) {
+            lenisInstance.scrollTo(targetY, { duration: 1.25 });
+          } else {
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+        }
+      });
+      flowContainer.appendChild(hit);
+
+      return { isHero: false, letterEls, hit };
+    });
+
+    // G. Rail Click Jumps
     rulerContainer.addEventListener('click', (e) => {
       const vh = window.innerHeight;
       const map = rulerMap(vh);
@@ -349,13 +380,13 @@
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
       const targetScroll = targetP * maxScroll;
       if (lenisInstance) {
-        lenisInstance.scrollTo(targetScroll, { duration: 1.2 });
+        lenisInstance.scrollTo(targetScroll, { duration: 1.25 });
       } else {
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       }
     });
 
-    // D. Animation Frame Loop
+    // H. Digits & Odometer Tracking
     const digitCols = [
       document.getElementById('rd-col-0'),
       document.getElementById('rd-col-1'),
@@ -364,6 +395,7 @@
     let prevDigits = [-1, -1, -1];
     let prevPct = -1;
 
+    // I. Animation Frame Loop (1:1 ArtCraft HeadingFlow Execution)
     function renderLoop() {
       const docH = document.documentElement.scrollHeight;
       const vh = window.innerHeight;
@@ -375,7 +407,7 @@
       const map = rulerMap(vh);
       const drift = map.drift(progress);
 
-      // 1. Move Tick Track & Needle
+      // 1. Move Tick Track & Traveling Needle
       tickTrack.style.transform = `translate3d(0, ${-scrollY + drift}px, 0)`;
       const ny = map.base + progress * map.span;
       needle.style.transform = `translate3d(0, ${ny}px, 0)`;
@@ -397,192 +429,207 @@
         }
       }
 
-      // 3. Layout Metrics
-      const T = (LAYOUT.thresholdPct / 100) * vh;
-      const yTopLine = NAV_H + LAYOUT.topPad;
-      const yQueueLine = vh - LAYOUT.queuePad;
-      const hp = LAYOUT.headingPx; // 34px
-      const rs = LAYOUT.ridingPx / hp; // 20 / 34 ≈ 0.588
-      const qs = LAYOUT.queuePx / hp;  // 16 / 34 ≈ 0.470
-      const rightGuideX = vw - LAYOUT.railW - LAYOUT.textPad;
-      const railCenterX = vw - LAYOUT.railW / 2;
+      // 3. Layout Constants
+      const L = (LAYOUT.thresholdPct / 100) * vh;
+      const A = NAV_H + LAYOUT.topPad;
+      const I = vh - LAYOUT.queuePad;
+      const D = LAYOUT.headingPx;                  // 34px
+      const _ = LAYOUT.ridingPx / D;               // 20 / 34 ≈ 0.588235
+      const z = LAYOUT.queuePx / D;                // 16 / 34 ≈ 0.470588
+      const W = vw - LAYOUT.railW / 2;             // Rail center X
 
-      // Hero Phase calculation
-      const heroFlipP = clamp01((scrollY - MOTION.heroStart) / MOTION.heroZone);
+      // 4. Hero Flight Trigger Geometry
+      const heroReady = heroBaseMetrics && heroBaseMetrics.els.length > 0;
+      const heroStartY = heroReady
+        ? Math.max(0, (heroBaseMetrics.baseDocY[0] - 0.5 * heroBaseMetrics.fontPx) - NAV_H - MOTION.heroLead)
+        : 20;
+      const heroFlipP = clamp01((scrollY - heroStartY) / MOTION.heroZone);
 
-      // Phases for non-hero sections
+      // 5. Compute Phases for All Sections
       const phases = measuredSections.map((s) => {
-        const m = s.metrics;
-        const rideLen = m.total * hp * rs;
+        if (s.isHero) {
+          return { v: 0, rideLen: 0, flipP: heroFlipP, detachP: 1, yq: I };
+        }
+        const u = labelMetrics[s.label];
+        const rideLen = (u ? u.total : 0) * D * _;
         const v = s.anchor - scrollY + drift;
-        const flipP = clamp01((T + MOTION.flipZone - v) / MOTION.flipZone);
-        let endFlip = flipP;
-        if (s.anchor - maxScroll > T) {
+        let flipP = clamp01((L + MOTION.flipZone - v) / MOTION.flipZone);
+        if (s.anchor - maxScroll > L) {
           const endStart = Math.min(s.bottom - vh, maxScroll - 24);
           const zone = Math.max(24, maxScroll - endStart);
-          endFlip = Math.max(flipP, clamp01((scrollY - endStart) / zone));
+          flipP = Math.max(flipP, clamp01((scrollY - endStart) / zone));
         }
-        return { v, rideLen, flipP: endFlip, detachP: 0, yq: yQueueLine };
+        return { v, rideLen, flipP, detachP: 0, yq: I };
       });
 
-      // Backward pass for queue stacking
-      let below = 0;
+      // Backward pass: Queue positions & detach ramp
+      let belowCount = 0;
       for (let wi = measuredSections.length - 1; wi >= 0; wi--) {
+        if (measuredSections[wi].isHero) continue;
         const ph = phases[wi];
-        ph.yq = yQueueLine - LAYOUT.queueSlot * below;
+        ph.yq = I - LAYOUT.queueSlot * belowCount;
         ph.detachP = clamp01((ph.yq + MOTION.detachZone - (ph.v + ph.rideLen)) / MOTION.detachZone);
-        below += 1 - ph.detachP;
+        belowCount += 1 - ph.detachP;
       }
 
-      // Count stacked sections (Hero is stack slot 0 once flipped)
-      let stackedCount = heroFlipP >= 1 ? 1 : 0;
+      // Count stacked sections & flip transition progress
+      let stackedCount = 0;
       let flipShift = 0;
       for (const p of phases) {
         if (p.flipP >= 1) stackedCount++;
         else if (p.flipP > 0) flipShift += p.flipP;
       }
 
-      // Pose calculation helper functions (Flush right-aligned to rightGuideX)
-      const horizPose = (m, i, yLine, s, alpha) => {
-        const along = (m.cum[i] + m.adv[i] / 2) * hp * s;
-        const totalW = m.total * hp * s;
-        const x = rightGuideX - (totalW - along);
-        return { x, y: yLine, rot: 0, scale: s, alpha };
+      // 6. Pose Helpers (Flush Right-Aligned to Guide, 1:1 ArtCraft Formula)
+      const B = (u, t, yLine, scale, alpha) => {
+        const s = (u.cum[t] + u.adv[t] / 2) * D * scale;
+        const a = LAYOUT.railW + LAYOUT.textPad + (u.total * D * scale - s);
+        return {
+          x: vw - a,
+          y: yLine,
+          rot: 0,
+          scale: scale,
+          alpha: alpha
+        };
       };
 
-      const ridePose = (m, i, top) => {
-        const along = (m.cum[i] + m.adv[i] / 2) * hp * rs;
-        const totalH = m.total * hp * rs;
-        const y = top + (totalH - along);
-        return { x: railCenterX, y, rot: -90, scale: rs, alpha: 0.65 };
-      };
+      const Z = (u, t, top) => ({
+        x: W,
+        y: top + (u.total - u.cum[t] - u.adv[t] / 2) * D * _,
+        rot: -90,
+        scale: _,
+        alpha: LAYOUT.queueAlpha
+      });
 
-      // 4. Drive ACTUAL Hero Wordmark Letters (#hero-wordmark-masthead)
-      if (heroLetters.length && heroBaseMetrics) {
-        const nHero = heroLetters.length;
-        const targetScale = LAYOUT.queuePx / heroBaseMetrics.fontPx;
-        const targetWordW = heroBaseMetrics.totalWidth * targetScale;
-        const targetStartX = rightGuideX - targetWordW;
-
-        if (heroFlipP <= 0) {
-          heroLetters.forEach(el => {
-            el.style.transform = '';
-            el.style.opacity = '1';
-          });
-        } else {
-          heroLetters.forEach((el, i) => {
-            const si = nHero - 1 - i;
-            const pi = clamp01(heroFlipP * (1 + (nHero - 1) * MOTION.stagger) - si * MOTION.stagger);
-            const e = easeInOutCubic(pi);
-
-            const naturalX = heroBaseMetrics.baseX[i];
-            const naturalY = heroBaseMetrics.baseDocY[i] - scrollY;
-
-            // Target X center in top stack slot 0
-            const letterCum = heroBaseMetrics.widths.slice(0, i).reduce((a, b) => a + b, 0);
-            const letterCenter = letterCum + heroBaseMetrics.widths[i] / 2;
-            const targetX = targetStartX + letterCenter * targetScale;
-            const targetY = yTopLine;
-
-            // Inward quadratic bezier curve
-            const cx = (naturalX + targetX) / 2 - MOTION.arc;
-            const cy = (naturalY + targetY) / 2;
-            const u = 1 - e;
-            const curX = u * u * naturalX + 2 * u * e * cx + e * e * targetX;
-            const curY = u * u * naturalY + 2 * u * e * cy + e * e * targetY;
-            const curScale = 1 + (targetScale - 1) * e;
-
-            const deltaX = curX - naturalX;
-            const deltaY = curY - naturalY;
-
-            el.style.transform = `translate3d(${deltaX.toFixed(2)}px, ${deltaY.toFixed(2)}px, 0) scale(${curScale.toFixed(3)})`;
-            el.style.opacity = String(1 - 0.35 * e);
-          });
-        }
-      }
-
-      // 5. Update Each Non-Hero Section Heading
+      // 7. Render Each Section's Letters
       measuredSections.forEach((s, wi) => {
-        const refs = wordRefs[wi];
-        if (!refs) return;
+        const domRef = sectionDOMRefs[wi];
+        if (!domRef) return;
         const ph = phases[wi];
-        const m = s.metrics;
-        const n = m.adv.length;
+        const isHero = s.isHero && heroReady;
+        const u = isHero ? heroBaseMetrics.metrics : labelMetrics[s.label];
+        if (!u) return;
 
-        let p, from, to;
-        const isFlipping = ph.flipP > 0;
-        const isDetaching = ph.detachP < 1;
+        const N = u.adv.length;
+        let p, fromPose, toPose;
+        let isFlipping = false;
 
-        if (isFlipping) {
+        if (isHero) {
           p = ph.flipP;
-          from = (i) => ridePose(m, i, ph.v);
-          const stackSlot = wi + 1; // Slot 0 is reserved for Hero ZETICA
+          isFlipping = true;
+          fromPose = (i) => ({
+            x: heroBaseMetrics.baseX[i],
+            y: heroBaseMetrics.baseDocY[i] - scrollY,
+            rot: 0,
+            scale: heroBaseMetrics.fontPx / D,
+            alpha: 1
+          });
 
           if (ph.flipP >= 1) {
-            // Stacked: demoted if newer word entered, 34px full size if active
-            const demote = stackSlot === stackedCount - 1 ? flipShift : 1;
-            const y = yTopLine + stackSlot * LAYOUT.queueSlot + LAYOUT.currentGap * (1 - demote);
-            const scale = 1 - (1 - qs) * demote;
-            const alpha = 1 - (1 - 0.6) * demote;
-            to = (i) => horizPose(m, i, y, scale, alpha);
+            const isCurrent = (stackedCount === 1);
+            const demote = isCurrent ? flipShift : 1;
+            const y = A + 0 * LAYOUT.queueSlot + LAYOUT.currentGap * (1 - demote);
+            const scale = 1 - (1 - z) * demote;
+            const alpha = 1 - (1 - LAYOUT.queueAlpha) * demote;
+            toPose = (i) => B(u, i, y, scale, alpha);
           } else {
-            to = (i) => horizPose(m, i, yTopLine + stackSlot * LAYOUT.queueSlot + LAYOUT.currentGap, 1, 1);
+            toPose = (i) => B(u, i, A + LAYOUT.currentGap, 1, 1);
           }
-        } else if (isDetaching) {
-          p = ph.detachP;
-          const vForm = ph.yq - ph.rideLen;
-          to = (i) => ridePose(m, i, vForm);
-          from = (i) => horizPose(m, i, ph.yq, qs, 0.65);
         } else {
-          p = 1;
-          from = to = (i) => ridePose(m, i, ph.v);
+          if (ph.flipP > 0) {
+            p = ph.flipP;
+            isFlipping = true;
+            fromPose = (i) => Z(u, i, ph.v);
+            if (ph.flipP >= 1) {
+              const isCurrent = (wi === stackedCount - 1);
+              const demote = isCurrent ? flipShift : 1;
+              const y = A + wi * LAYOUT.queueSlot + LAYOUT.currentGap * (1 - demote);
+              const scale = 1 - (1 - z) * demote;
+              const alpha = 1 - (1 - LAYOUT.queueAlpha) * demote;
+              toPose = (i) => B(u, i, y, scale, alpha);
+            } else {
+              toPose = (i) => B(u, i, A + wi * LAYOUT.queueSlot + LAYOUT.currentGap, 1, 1);
+            }
+          } else if (ph.detachP < 1) {
+            p = ph.detachP;
+            const vForm = ph.yq - ph.rideLen;
+            toPose = (i) => Z(u, i, vForm);
+            fromPose = (i) => B(u, i, ph.yq, z, LAYOUT.queueAlpha);
+          } else {
+            p = 1;
+            fromPose = toPose = (i) => Z(u, i, ph.v);
+          }
         }
 
+        // Letter flight execution with inward quadratic bezier curve
         const sf = MOTION.stagger;
-        const span = 1 + (n - 1) * sf;
+        const span = 1 + (N - 1) * sf;
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
 
-        for (let i = 0; i < n; i++) {
-          const el = refs.letterEls[i];
+        for (let i = 0; i < N; i++) {
+          const el = domRef.letterEls[i];
           if (!el) continue;
-          const si = n - 1 - i;
+
+          const si = isFlipping ? (N - 1 - i) : i;
           const pi = clamp01(p * span - si * sf);
           const e = easeInOutCubic(pi);
-          const a = from(i);
-          const b = to(i);
+
+          const a = fromPose(i);
+          const b = toPose(i);
 
           const cx = (a.x + b.x) / 2 - MOTION.arc;
           const cy = (a.y + b.y) / 2;
-          const u = 1 - e;
-          const x = u * u * a.x + 2 * u * e * cx + e * e * b.x;
-          const y = u * u * a.y + 2 * u * e * cy + e * e * b.y;
-          const rot = a.rot + (b.rot - a.rot) * e;
-          const scale = a.scale + (b.scale - a.scale) * e;
-          const alpha = a.alpha + (b.alpha - a.alpha) * e;
+          const inv = 1 - e;
 
-          el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
-          el.style.opacity = String(alpha);
+          const curX = inv * inv * a.x + 2 * inv * e * cx + e * e * b.x;
+          const curY = inv * inv * a.y + 2 * inv * e * cy + e * e * b.y;
+          const curRot = a.rot + (b.rot - a.rot) * e;
+          const curScale = a.scale + (b.scale - a.scale) * e;
+          const curAlpha = a.alpha + (b.alpha - a.alpha) * e;
 
-          // Active 34px heading gets crisp high ink & bold weight
-          if (scale > 0.85 && Math.abs(rot) < 5) {
-            el.style.fontWeight = '800';
-            el.classList.add('active');
+          if (isHero) {
+            if (p <= 0) {
+              el.style.transform = '';
+              el.style.opacity = '1';
+              el.style.color = '';
+            } else {
+              const deltaX = curX - heroBaseMetrics.baseX[i];
+              const deltaY = curY - (heroBaseMetrics.baseDocY[i] - scrollY);
+              const totalScale = curScale * (D / heroBaseMetrics.fontPx);
+              el.style.transform = `translate3d(${deltaX.toFixed(2)}px, ${deltaY.toFixed(2)}px, 0) rotate(${curRot.toFixed(1)}deg) scale(${totalScale.toFixed(4)})`;
+              el.style.opacity = '1';
+              const alphaC = clamp01(curAlpha);
+              el.style.color = alphaC >= 0.98
+                ? 'var(--ink-strong, #ffffff)'
+                : `color-mix(in srgb, var(--ink-strong, #ffffff) ${(100 * alphaC).toFixed(1)}%, var(--bg, #000000))`;
+            }
           } else {
-            el.style.fontWeight = '700';
-            el.classList.remove('active');
+            el.style.transform = `translate3d(${curX.toFixed(2)}px, ${curY.toFixed(2)}px, 0) translate(-50%, -50%) rotate(${curRot.toFixed(1)}deg) scale(${curScale.toFixed(4)})`;
+            el.style.opacity = '1';
+            const alphaC = clamp01(curAlpha);
+            el.style.color = alphaC >= 0.98
+              ? 'var(--ink-strong, #ffffff)'
+              : `color-mix(in srgb, var(--ink-strong, #ffffff) ${(100 * alphaC).toFixed(1)}%, var(--bg, #000000))`;
           }
 
-          if (x < minX) minX = x;
-          if (x > maxX) maxX = x;
-          if (y < minY) minY = y;
-          if (y > maxY) maxY = y;
+          // Calculate bounding box for hit link
+          const charHalfW = (u.adv[i] * D * curScale) / 2 + 2;
+          const charHalfH = (D * curScale) / 2 + 2;
+          const isRot = Math.abs(curRot) > 45;
+          const boxW = isRot ? charHalfH : charHalfW;
+          const boxH = isRot ? charHalfW : charHalfH;
+          if (curX - boxW < minX) minX = curX - boxW;
+          if (curX + boxW > maxX) maxX = curX + boxW;
+          if (curY - boxH < minY) minY = curY - boxH;
+          if (curY + boxH > maxY) maxY = curY + boxH;
         }
 
-        if (refs.hit && minX < Infinity) {
-          refs.hit.style.left = `${minX - 10}px`;
-          refs.hit.style.top = `${minY - 6}px`;
-          refs.hit.style.width = `${Math.max(20, maxX - minX + 20)}px`;
-          refs.hit.style.height = `${Math.max(20, maxY - minY + 12)}px`;
+        // Update clickable hit bounding box
+        if (domRef.hit && isFinite(minX)) {
+          domRef.hit.style.left = `${(minX - 4).toFixed(1)}px`;
+          domRef.hit.style.top = `${(minY - 4).toFixed(1)}px`;
+          domRef.hit.style.width = `${(maxX - minX + 8).toFixed(1)}px`;
+          domRef.hit.style.height = `${(maxY - minY + 8).toFixed(1)}px`;
         }
       });
 
@@ -592,15 +639,13 @@
     requestAnimationFrame(renderLoop);
   }
 
-  // Initialize on load
+  // 6. Bootstrap on DOM Ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      initLenis();
       initResourcesDropdown();
       initInstrument();
     });
   } else {
-    initLenis();
     initResourcesDropdown();
     initInstrument();
   }

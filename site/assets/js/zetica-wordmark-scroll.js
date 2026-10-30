@@ -12,8 +12,7 @@
     const masthead = document.getElementById('hero-wordmark-masthead');
     if (!masthead) return;
 
-    const logo = document.getElementById('wm-letter-0');
-    const letters = Array.from(document.querySelectorAll('.wm-letter:not(#wm-letter-0)'));
+    const letters = Array.from(document.querySelectorAll('.wm-letter'));
     const revealEls = Array.from(document.querySelectorAll('[data-reveal="true"]'));
 
     // Check prefers-reduced-motion
@@ -29,32 +28,28 @@
       return;
     }
 
-    // Intro Animation (Monogram glide + blade letter slide)
+    // Intro Animation (Staggered letter rise and blur focus, matching ArtCraft)
     if (typeof gsap !== 'undefined') {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      // Initial state
-      gsap.set(logo, { x: 80, scale: 0.95, opacity: 0 });
-      gsap.set(letters, { x: -40, opacity: 0, clipPath: 'inset(0% 100% 0% 0%)' });
+      // Initial state: letters start slightly offset with soft blur
+      gsap.set(letters, { y: 24, opacity: 0, filter: 'blur(10px)' });
 
-      // Animate Monogram to resting position
-      tl.to(logo, {
-        x: 0,
-        scale: 1,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out'
-      });
-
-      // Animate letters sliding out from behind the monogram
+      // Animate letters to resting position
       tl.to(letters, {
-        x: 0,
+        y: 0,
         opacity: 1,
-        clipPath: 'inset(0% 0% 0% 0%)',
-        stagger: 0.04,
-        duration: 0.7,
-        ease: 'power3.out'
-      }, '-=0.4');
+        filter: 'blur(0px)',
+        stagger: 0.05,
+        duration: 0.8,
+        ease: 'power3.out',
+        onComplete: () => {
+          letters.forEach(l => {
+            l.style.filter = '';
+            l.style.transform = '';
+          });
+        }
+      });
 
       // Reveal headline, copy, and download buttons
       tl.to(revealEls, {
@@ -64,16 +59,8 @@
         visibility: 'visible',
         stagger: 0.1,
         duration: 0.8,
-        ease: 'power2.out',
-        onComplete: () => {
-          // Clear any inline clipPath or transform from intro so HeadingFlow has full control
-          letters.forEach(l => {
-            l.style.clipPath = '';
-            l.style.transform = '';
-          });
-          if (logo) logo.style.transform = '';
-        }
-      }, '-=0.3');
+        ease: 'power2.out'
+      }, '-=0.4');
     } else {
       // Fallback if GSAP is not yet loaded
       revealEls.forEach(el => {

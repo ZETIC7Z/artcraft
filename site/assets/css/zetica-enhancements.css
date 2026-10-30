@@ -72,6 +72,21 @@ html[data-theme="dark"] #wm-letter-0 img {
   background: rgba(0, 0, 0, 0.05);
 }
 
+:root {
+  --ink-strong: #09090b;
+  --bg: #f8f8f8;
+}
+
+[data-theme="dark"], body.dark {
+  --ink-strong: #ffffff;
+  --bg: #09090b;
+}
+
+[data-theme="light"], body.light {
+  --ink-strong: #09090b;
+  --bg: #f8f8f8;
+}
+
 /* 3. Scroll Ruler Instrument Container & Layout */
 .zetica-ruler-instrument {
   position: fixed;
@@ -83,6 +98,7 @@ html[data-theme="dark"] #wm-letter-0 img {
   pointer-events: auto;
   user-select: none;
   cursor: pointer;
+  background: transparent !important;
 }
 
 .ruler-frost-gutter {
@@ -90,8 +106,7 @@ html[data-theme="dark"] #wm-letter-0 img {
   inset: 0;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.6) 40%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.6) 40%, transparent 100%);
+  background: transparent !important;
   pointer-events: none;
 }
 
@@ -216,16 +231,32 @@ html[data-theme="dark"] #wm-letter-0 img {
   position: absolute;
   left: 0;
   top: 0;
+  white-space: pre;
   display: inline-block;
   font-family: var(--font-archivo), 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-size: 34px;
+  font-weight: 620;
   text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: normal;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0 0 4px var(--bg), 0 0 10px var(--bg);
+}
+
+.wm-letter {
+  display: inline-block;
+  font-family: var(--font-archivo), 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-weight: 750;
   line-height: 1;
   letter-spacing: 0.04em;
   transform-origin: center center;
   will-change: transform, opacity;
   user-select: none;
-  transition: color 0.15s ease;
   -webkit-font-smoothing: antialiased;
+  text-shadow: 0 0 4px var(--bg), 0 0 10px var(--bg);
 }
 
 .flow-word-hit {
@@ -244,6 +275,11 @@ html[data-theme="dark"] #wm-letter-0 img {
 
 [data-theme="light"] .flow-word-hit:hover {
   background: rgba(0, 0, 0, 0.04);
+}
+
+/* Prevent any ghost scrollbars or white frames */
+[role="scrollbar"], ::-webkit-scrollbar-track {
+  background: transparent !important;
 }
 
 /* 6. Theme Colors & Typography Contrast */
