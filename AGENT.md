@@ -82,12 +82,53 @@
 
 ---
 
-## 4. Live Browser Verification Artifacts
-Captured and verified in Microsoft Edge and Chromium with 0 PageErrors and 0 Console Errors:
+## 4. Zetica Hub Desktop Launcher Rebranding (`craft-launcher`)
+
+### 1. Two-Tone Brand Typography Engine (`crates/ui-egui/src/widgets.rs`):
+- Formats every official suite app card, table row, and details drawer as **`ZETICA [APP]`** in exact two-tone coloring:
+  - **`ZETICA `**: App category accent color (`t.app_ink(app)`).
+    - Pink (`#FF7AB8`) for **`ZETICA EFFECT`**
+    - Emerald Green (`#4FD68A`) for **`ZETICA GRID`**
+    - Sky Blue (`#7CC8FF`) for **`ZETICA CAD`**
+    - Vibrant Orange (`#FFA060`) for **`ZETICA DECK`**
+    - Lime (`#A6E04A`) for **`ZETICA DESIGN`**
+    - Cornflower Blue (`#7FB0FF`) for **`ZETICA PHOTO`**
+    - Coral/Red (`#FF8A70`) for **`ZETICA VECTOR`**
+    - Purple (`#B69CFF`) for **`ZETICA FILM`**
+    - Amber/Gold (`#FFC14D`) for **`ZETICA LIGHT`**
+    - Crimson (`#F23A62`) for **`ZETICA PDF`**
+    - Teal (`#4FE8B6`) for **`ZETICA FIG`**
+    - Indigo (`#8EA2FF`) for **`ZETICA WORD`**
+    - Cyan (`#5FD0EE`) for **`ZETICA SOUND`**
+  - **`[APP]`**: Solid bright ink / pure white (`t.ink_strong` / `#FFFFFF`).
+  - Font styling: `egui::FontId::new(size, theme::display())` with `-0.02 * size` kerning.
+
+### 2. Header & Surface Polishing (`crates/ui-egui/src/views.rs`):
+- Center top header bar: Rebranded from `CRAFT APP SUITE` to **`ZETICA APP SUITE`**.
+- Window title: Set to **`Zetica Hub`**.
+- Monogram logo: Vector ZE logo with alt text `ZETICA`.
+- Redundant badge elimination: Removed `[BY ZETICA]` badge next to official apps since the title itself starts with `ZETICA `.
+
+### 3. Website Direct Download Pipeline:
+- All 30 HTML pages (`site/*.html` and `UNCAGE/output/getartcraft.com/*.html`) updated to link "DOWNLOAD ZETICA HUB" / "DOWNLOAD LAUNCHER" directly to:
+  `https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.0/zetica-hub-windows-x64.zip`
+- Zero legacy `.msi` or `artcraft-launcher-0.8.1` references remain.
+
+### 4. Release Build Pipeline & Automated Artifacts:
+- GitHub Actions workflow `.github/workflows/release-zetica.yml` on `ZETIC7Z/craft-launcher`.
+- Full release `v0.10.0` published with release asset `zetica-hub-windows-x64.zip`.
+- Extracted and deployed to `C:\Users\ZETICUZ\Desktop\zetica-hub-windows-x64\zetica-hub.exe`.
+
+---
+
+## 5. Live Browser Verification Artifacts
+Captured and verified in Microsoft Edge, Chromium, and Playwright with 0 PageErrors and 0 Console Errors:
 - `branding/verification/perfect_dark_scroll_0.png`: Dark mode resting hero with pure text `Z E T I C A` (zero inline logo), white ZE navbar monogram, and bottom-right queue (`ZETICA APPS` to `GET STARTED` all at 16px).
 - `branding/verification/perfect_light_scroll_0.png`: Light mode resting hero with black ZE navbar monogram and pure text dark `Z E T I C A`.
+- `branding/verification/perfect_dark_screenshot_now.png`: Live browser dark mode showing 13 Zetica apps grid with full theme inversion and 16px stacked typography.
 - `branding/verification/perfect_dark_scroll_500.png`: `ZETICA` wordmark letters in flight into top-right stack, `ZETICA APPS` riding vertically along tick rail, and bottom queue.
 - `branding/verification/perfect_dark_scroll_1500.png`: Top stack with `ZETICA` (16px) and `ZETICA APPS` (16px) stacked with exact 20px spacing, `ZETICA STUDIO` active in 34px bold display type, `FEATURES` riding on vertical rail, and bottom queue (`OWNERSHIP`, `COMMUNITY`, `GET STARTED` all at 16px).
 - `branding/verification/perfect_dark_scroll_3500.png`: Deep scroll showing full stack with consistent 16px sizing and 0 console errors.
 - `branding/verification/perfect_resources_dropdown.png`: Interactive Resources dropdown open showing `TUTORIALS`, `NEWS`, `FAQ`, and `PRESS KIT`.
+
 
