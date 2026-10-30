@@ -14,15 +14,16 @@
 
 ## 2. Repositories & GitHub Infrastructure (`ZETIC7Z`)
 
-| Repository | Role | Upstream | Workflows Active |
-|---|---|---|---|
-| **[ZETIC7Z/craft-launcher](https://github.com/ZETIC7Z/craft-launcher)** | **Zetica Hub** (Native desktop installer, hub & updater) | `storytold/craft-launcher` | `.github/workflows/sync-upstream.yml`<br>`.github/workflows/release-zetica.yml` |
-| **[ZETIC7Z/effectcraft](https://github.com/ZETIC7Z/effectcraft)** | **Zetica Motion** (Motion graphics & 3D VFX compositor in pure Rust) | `storytold/effectcraft` | `.github/workflows/sync-upstream.yml`<br>`.github/workflows/release-zetica.yml` |
-| **[ZETIC7Z/artcraft](https://github.com/ZETIC7Z/artcraft)** | **Zetica Ecosystem** (Website, brand assets, tooling) | `storytold/artcraft` | Master umbrella repository |
+| Repository | Role | Upstream | Workflows Active | Releases |
+|---|---|---|---|---|
+| **[ZETIC7Z/craft-launcher](https://github.com/ZETIC7Z/craft-launcher)** | **Zetica Hub** (Native desktop installer, hub & updater) | `storytold/craft-launcher` | `.github/workflows/sync-upstream.yml`<br>`.github/workflows/release-zetica.yml` | **v0.10.0** (`zetica-hub-windows-x64.zip`) |
+| **[ZETIC7Z/effectcraft](https://github.com/ZETIC7Z/effectcraft)** | **Zetica Motion** (Motion graphics & 3D VFX compositor in pure Rust) | `storytold/effectcraft` | `.github/workflows/sync-upstream.yml`<br>`.github/workflows/release-zetica.yml` | **v0.17.0** (Building) |
+| **[ZETIC7Z/artcraft](https://github.com/ZETIC7Z/artcraft)** | **Zetica Ecosystem** (Website, brand assets, tooling) | `storytold/artcraft` | `.github/workflows/sync-upstream.yml` | Pushed to `master` |
 
 ### Automated Synchronization & Releases:
-- **Daily Upstream Sync**: Both `craft-launcher` and `effectcraft` run automated daily synchronization (`cron: 0 0 * * *`) pulling updates from `storytold` while preserving all ZETICA brand assets and metadata.
+- **Daily Upstream Sync**: All three repositories (`artcraft`, `craft-launcher`, and `effectcraft`) run automated daily synchronization (`cron: 0 0 * * *`) pulling updates from `storytold` while preserving all ZETICA brand assets and metadata.
 - **Standalone Release Workflows**: GitHub Actions builds Windows x64 portable binaries (`zetica-hub.exe`, `zetica-motion.exe`), packages `.zip` archives, and publishes GitHub releases automatically.
+- **Direct Installer Delivery**: All 40 cloned site pages have had their download buttons wired directly to the published releases (`https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.0/zetica-hub-windows-x64.zip`).
 
 ---
 
