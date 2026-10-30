@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "suite": {
+    "name": "Zetica Creative Suite",
+    "brand": "Zetica",
+    "version": "1.0.0",
+    "developer": "Sam Pangilinan (ZETICUZ)",
+    "homepage": "https://www.zeticuz.xyz/",
+    "branding": {
+      "primaryColor": "#E50914",
+      "surfaceColor": "#0B0B0E",
+      "accentGlow": "#FF334B",
+      "logo": "branding/zetica-logo.svg",
+      "hubIcon": "branding/zetica-hub-icon.svg"
+    }
+  },
+  "apps": [
+    {
+      "id": "zetica-motion",
+      "name": "Zetica Motion",
+      "codename": "effectcraft",
+      "upstream": "storytold/effectcraft",
+      "description": "Native motion graphics, visual effects compositing, and timeline animation built from scratch in pure Rust.",
+      "category": "Video & VFX",
+      "icon": "branding/zetica-motion-icon.svg",
+      "executable": "zetica-motion.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-canvas",
+      "name": "Zetica Canvas",
+      "codename": "photocraft",
+      "upstream": "storytold/photocraft",
+      "description": "High-performance raster image editing with layer masks, blending modes, type engine, and native PSD support.",
+      "category": "Imaging",
+      "icon": "branding/zetica-canvas-icon.svg",
+      "executable": "zetica-canvas.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-vector",
+      "name": "Zetica Vector",
+      "codename": "vectorcraft",
+      "upstream": "storytold/vectorcraft",
+      "description": "Precision vector illustration, Bézier path manipulation, SVG export, and typography tool.",
+      "category": "Illustration",
+      "icon": "branding/zetica-vector-icon.svg",
+      "executable": "zetica-vector.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-cinema",
+      "name": "Zetica Cinema",
+      "codename": "filmcraft",
+      "upstream": "storytold/filmcraft",
+      "description": "Multi-track non-linear video editing, precision audio synchronization, and color grading.",
+      "category": "Video & VFX",
+      "icon": "branding/zetica-cinema-icon.svg",
+      "executable": "zetica-cinema.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-raw",
+      "name": "Zetica RAW",
+      "codename": "lightcraft",
+      "upstream": "storytold/lightcraft",
+      "description": "Non-destructive digital camera RAW development, tone curves, and library management.",
+      "category": "Photography",
+      "icon": "branding/zetica-raw-icon.svg",
+      "executable": "zetica-raw.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-frame",
+      "name": "Zetica Frame",
+      "codename": "figcraft",
+      "upstream": "storytold/figcraft",
+      "description": "Interface design, component systems, and interactive screen prototyping.",
+      "category": "Design & UI/UX",
+      "icon": "branding/zetica-frame-icon.svg",
+      "executable": "zetica-frame.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-wave",
+      "name": "Zetica Wave",
+      "codename": "soundcraft",
+      "upstream": "storytold/soundcraft",
+      "description": "Multi-channel digital audio workstation, sound editing, waveform manipulation, and mastering.",
+      "category": "Audio",
+      "icon": "branding/zetica-wave-icon.svg",
+      "executable": "zetica-wave.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-dimension",
+      "name": "Zetica Dimension",
+      "codename": "cadcraft",
+      "upstream": "storytold/cadcraft",
+      "description": "Parametric computer-aided design, technical drafting, and solid modeling.",
+      "category": "3D & CAD",
+      "icon": "branding/zetica-dimension-icon.svg",
+      "executable": "zetica-dimension.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    },
+    {
+      "id": "zetica-doc",
+      "name": "Zetica Doc",
+      "codename": "pdfcraft",
+      "upstream": "storytold/pdfcraft",
+      "description": "Document management, PDF annotation, page reorganization, and cryptographic protection.",
+      "category": "Publishing & Docs",
+      "icon": "branding/zetica-doc-icon.svg",
+      "executable": "zetica-doc.exe",
+      "installerType": "msi",
+      "supportedPlatforms": ["windows-x64", "windows-arm64", "macos-universal", "linux-x86_64"]
+    }
+  ]
+}
