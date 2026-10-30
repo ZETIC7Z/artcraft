@@ -109,26 +109,75 @@
 - Monogram logo: Vector ZE logo with alt text `ZETICA`.
 - Redundant badge elimination: Removed `[BY ZETICA]` badge next to official apps since the title itself starts with `ZETICA `.
 
-### 3. Website Direct Download Pipeline:
-- All 30 HTML pages (`site/*.html` and `UNCAGE/output/getartcraft.com/*.html`) updated to link "DOWNLOAD ZETICA HUB" / "DOWNLOAD LAUNCHER" directly to:
-  `https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.0/zetica-hub-windows-x64.zip`
-- Zero legacy `.msi` or `artcraft-launcher-0.8.1` references remain.
+### 3. Windows MSI Installer & Setup Wizard (`packaging/windows/`):
+- **Package**: `zetica-hub-windows-x64.msi` (20.3 MB production release).
+- **Setup Wizard Branding**:
+  - Custom 493x312 left sidebar dialog (`WixUI_Bmp_Dialog`) featuring:
+    - Clean white squircle desktop box with crisp black ZE monogram centered inside.
+    - White `ZETICA` wordmark rendered in Archivo Variable typography.
+    - `HUB` mono system label in Geist Mono.
+    - 13 Zetica Suite animal/tool icons arranged in a clean hairline grid.
+    - Vertical pink accent divider line (`#E0368F`).
+  - Custom 493x58 banner header (`WixUI_Bmp_Banner`) with right dark cell containing the squircle logo and pink accent line.
+  - Setup wizard copy:
+    - Welcome title: `"Welcome to Zetica Hub 0.10.0"`
+    - Description: `"Zetica Hub installs, updates and opens the Zetica App Suite: ZETICA PHOTO, ZETICA VECTOR, ZETICA FILM and the rest of the open-source Zetica apps. It installs for you only, so no administrator rights are needed. Click Next to continue."`
+    - Folder Selection: Includes `PathEdit` with `"Change..."` button allowing users to choose the target drive or directory.
+    - Optional desktop shortcut checkbox: Defaults to checked on initial install.
+    - Exit dialog: `"Zetica Hub 0.10.0 is installed. Start it any time from the Start menu or desktop to install and update the Zetica App Suite."` with `"Launch Zetica Hub"` checkbox.
+- **Desktop & Start Menu Shortcut Icon**:
+  - High-resolution squircle tile design inspired by ArtCraft app icons and Antigravity desktop icon:
+    - Pure white rounded square box (radius 210px) with subtle 2.5px light perimeter border (`#D2D6DE`).
+    - Crisp solid black ZE monogram (`#0C0D11`) centered inside.
+  - Multi-resolution Windows ICO (`artcraft-launcher.ico`) containing 16x16, 24x24, 32x32, 48x48, 64x64, 128x128, and 256x256 mipmaps.
+  - Injected directly into the executable's `RT_GROUP_ICON` / `RT_ICON` PE resources so Windows Explorer and Desktop display the squircle icon natively.
+- **Website Direct Download Pipeline**:
+  - All 40 HTML pages updated across `site/*.html` and `UNCAGE/output/getartcraft.com/*.html` to link "DOWNLOAD ZETICA HUB" / "DOWNLOAD LAUNCHER" directly to:
+    `/zetica-hub-windows-x64.msi` (`download="zetica-hub-windows-x64.msi"`).
+  - Also served from `C:\Users\ZETICUZ\Downloads\zetica-hub-windows-x64.msi` and `C:\Users\ZETICUZ\Desktop\zetica-hub-windows-x64.msi`.
+  - Zero `.zip` downloads; users download the native MSI directly.
 
 ### 4. Release Build Pipeline & Automated Artifacts:
-- GitHub Actions workflow `.github/workflows/release-zetica.yml` on `ZETIC7Z/craft-launcher`.
-- Full release `v0.10.0` published with release asset `zetica-hub-windows-x64.zip`.
-- Extracted and deployed to `C:\Users\ZETICUZ\Desktop\zetica-hub-windows-x64\zetica-hub.exe`.
+- Updated `.github/workflows/release-zetica.yml` in `ZETIC7Z/craft-launcher`:
+  - Automatically installs WiX Toolset v5 (`wix 5.0.2`, `WixToolset.UI.wixext`, `WixToolset.Util.wixext`).
+  - Builds the release binary and packages both `zetica-hub-windows-x64.msi` and `zetica-hub-windows-x64.zip`.
+  - Releases both assets on GitHub Releases.
+- Committed all WiX configuration files (`artcraft-launcher.wxs`, `artcraft-launcher.en-us.wxl`, `package.ps1`).
 
 ---
 
-## 5. Live Browser Verification Artifacts
-Captured and verified in Microsoft Edge, Chromium, and Playwright with 0 PageErrors and 0 Console Errors:
-- `branding/verification/perfect_dark_scroll_0.png`: Dark mode resting hero with pure text `Z E T I C A` (zero inline logo), white ZE navbar monogram, and bottom-right queue (`ZETICA APPS` to `GET STARTED` all at 16px).
-- `branding/verification/perfect_light_scroll_0.png`: Light mode resting hero with black ZE navbar monogram and pure text dark `Z E T I C A`.
-- `branding/verification/perfect_dark_screenshot_now.png`: Live browser dark mode showing 13 Zetica apps grid with full theme inversion and 16px stacked typography.
-- `branding/verification/perfect_dark_scroll_500.png`: `ZETICA` wordmark letters in flight into top-right stack, `ZETICA APPS` riding vertically along tick rail, and bottom queue.
-- `branding/verification/perfect_dark_scroll_1500.png`: Top stack with `ZETICA` (16px) and `ZETICA APPS` (16px) stacked with exact 20px spacing, `ZETICA STUDIO` active in 34px bold display type, `FEATURES` riding on vertical rail, and bottom queue (`OWNERSHIP`, `COMMUNITY`, `GET STARTED` all at 16px).
-- `branding/verification/perfect_dark_scroll_3500.png`: Deep scroll showing full stack with consistent 16px sizing and 0 console errors.
-- `branding/verification/perfect_resources_dropdown.png`: Interactive Resources dropdown open showing `TUTORIALS`, `NEWS`, `FAQ`, and `PRESS KIT`.
+## 5. Live Verification Artifacts
+- `branding/verification/test_installer_dialog.bmp`: 493x312 pixel-perfect MSI installer dialog with squircle logo, white ZETICA wordmark, HUB label, 13 app icons, and pink accent divider.
+- `branding/verification/test_installer_banner.bmp`: 493x58 banner header with right squircle logo cell and pink divider.
+- `extracted_payload/updated_icon.png`: Verified squircle icon extracted from the PE resources of `zetica-hub.exe`.
+- `test_extract_rebranded/verified_icon.png`: Verified squircle icon extracted from inside the MSI payload.
+- `zetica-hub-windows-x64.msi`: 20,348,928 bytes valid Windows Installer MSI file, tested and verified with `msiexec /a` extraction and table verification.
 
+---
 
+## 6. JetBrains Student Pack & Tooling Integration
+- **License Holder**: Lucas Navarro
+- **License ID**: `A3840R48X0`
+- **Subscription Expiry**: September 29, 2027
+- **Included JetBrains Tooling**:
+  - CLion, DataGrip, dotCover, dotMemory, dotTrace, GoLand, IntelliJ IDEA Ultimate, PhpStorm, PyCharm Professional, ReSharper, ReSharper C++, ReSharper SQL support, Rider, RubyMine, RustRover, WebStorm.
+- **Local Installation**:
+  - WebStorm 2026.2.2: `C:\Program Files\JetBrains\WebStorm 2026.2.2`
+
+---
+
+## 7. App Suite Rebranding & Automation Architecture
+- **Zetica Deck (`ZETIC7Z/deckcraft`)**:
+  - 100% pure Rust presentation app rebranded from DeckCraft.
+  - Window Title: `Zetica Deck` / `Presenter View — Zetica Deck`.
+  - Ribbon & Backstage: Rebranded header, links, and About modal with Sam Pangilinan attribution (`https://www.zeticuz.xyz/`).
+  - Native Windows Packaging:
+    - Dual-scope installation (`perUserOrMachine`).
+    - Suite Directory: `Zetica\Deck` (`[LocalAppDataFolder]Programs\Zetica\Deck\` and `[%ProgramW6432]\Zetica\Deck\`).
+    - Registry Paths: `Software\ZETICA\Deck` and `App Paths\zetica-deck.exe`.
+- **Packaging Policy & Validation Rules**:
+  - `check-icons.ps1`: AppUserModelID must match `xyz.zeticuz.zetica-hub`.
+  - `check-install-policy.ps1`: Validates that suite folder allows `Zetica` or `ArtCraft`.
+  - `install-policy.json`: Aligned registry keys with `Software\ZETICA\Zetica Hub`.
+- **Continuous Upstream Synchronization**:
+  - `.github/workflows/sync-upstream.yml` scheduled daily at `00:00 UTC` to pull upstream core engine updates while preserving the ZETICA brand identity layer.
