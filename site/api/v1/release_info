@@ -1,0 +1,615 @@
+﻿{
+    "release_info":  {
+                         "apps":  {
+                                      "photocraft":  {
+                                                         "repo":  "ZETIC7Z/photocraft",
+                                                         "latest_release":  {
+                                                                                "tag":  "v0.15.0",
+                                                                                "name":  "Zetica Photo v0.15.0",
+                                                                                "published_at":  "2026-10-30T21:49:03Z",
+                                                                                "html_url":  "https://github.com/ZETIC7Z/photocraft/releases/tag/v0.15.0",
+                                                                                "prerelease":  false,
+                                                                                "notes_markdown":  "## Zetica Photo Release v0.15.0\n\nOfficial photo and image editor application for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- `zetica-photo-v0.15.0-windows-x64.msi`: Native Windows Installer\n- `zetica-photo-v0.15.0-windows-x64-portable.zip`: Portable standalone zip\n- `photocraft-v0.15.0-windows-x64.msi`: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                                "assets":  [
+                                                                                               {
+                                                                                                   "name":  "photocraft-0.17.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  66220414,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/photocraft/releases/download/v0.15.0/photocraft-0.17.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "photocraft-0.17.0-windows-x64.msi",
+                                                                                                   "size_bytes":  53170176,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/photocraft/releases/download/v0.15.0/photocraft-0.17.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "SHA256SUMS.txt",
+                                                                                                   "size_bytes":  426,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/photocraft/releases/download/v0.15.0/SHA256SUMS.txt",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-photo-0.17.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  66220414,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/photocraft/releases/download/v0.15.0/zetica-photo-0.17.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-photo-0.17.0-windows-x64.msi",
+                                                                                                   "size_bytes":  53170176,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/photocraft/releases/download/v0.15.0/zetica-photo-0.17.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               }
+                                                                                           ]
+                                                                            },
+                                                         "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                     },
+                                      "vectorcraft":  {
+                                                          "repo":  "ZETIC7Z/vectorcraft",
+                                                          "latest_release":  {
+                                                                                 "tag":  "v0.15.0",
+                                                                                 "name":  "Zetica Vector v0.15.0",
+                                                                                 "published_at":  "2026-10-30T21:48:41Z",
+                                                                                 "html_url":  "https://github.com/ZETIC7Z/vectorcraft/releases/tag/v0.15.0",
+                                                                                 "prerelease":  false,
+                                                                                 "notes_markdown":  "## Zetica Vector Release v0.15.0\n\nOfficial vector illustration and design application for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- `zetica-vector-v0.15.0-windows-x64.msi`: Native Windows Installer\n- `zetica-vector-v0.15.0-windows-x64-portable.zip`: Portable standalone zip\n- `vectorcraft-v0.15.0-windows-x64.msi`: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                                 "assets":  [
+                                                                                                {
+                                                                                                    "name":  "SHA256SUMS.txt",
+                                                                                                    "size_bytes":  430,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/vectorcraft/releases/download/v0.15.0/SHA256SUMS.txt",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "vectorcraft-0.18.0-windows-x64-portable.zip",
+                                                                                                    "size_bytes":  80790530,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/vectorcraft/releases/download/v0.15.0/vectorcraft-0.18.0-windows-x64-portable.zip",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "vectorcraft-0.18.0-windows-x64.msi",
+                                                                                                    "size_bytes":  60952576,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/vectorcraft/releases/download/v0.15.0/vectorcraft-0.18.0-windows-x64.msi",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "zetica-vector-0.18.0-windows-x64-portable.zip",
+                                                                                                    "size_bytes":  80790530,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/vectorcraft/releases/download/v0.15.0/zetica-vector-0.18.0-windows-x64-portable.zip",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "zetica-vector-0.18.0-windows-x64.msi",
+                                                                                                    "size_bytes":  60952576,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/vectorcraft/releases/download/v0.15.0/zetica-vector-0.18.0-windows-x64.msi",
+                                                                                                    "sha256":  null
+                                                                                                }
+                                                                                            ]
+                                                                             },
+                                                          "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                      },
+                                      "filmcraft":  {
+                                                        "repo":  "ZETIC7Z/filmcraft",
+                                                        "latest_release":  {
+                                                                               "tag":  "v0.13.0",
+                                                                               "name":  "Zetica Film v0.13.0",
+                                                                               "published_at":  "2026-10-30T21:39:12Z",
+                                                                               "html_url":  "https://github.com/ZETIC7Z/filmcraft/releases/tag/v0.13.0",
+                                                                               "prerelease":  false,
+                                                                               "notes_markdown":  "## Zetica Film Release v0.13.0\n\nOfficial non-linear video editing application for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- `zetica-film-v0.13.0-windows-x64.msi`: Native Windows Installer\n- `zetica-film-v0.13.0-windows-x64-portable.zip`: Portable standalone zip\n- `filmcraft-v0.13.0-windows-x64.msi`: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                               "assets":  [
+                                                                                              {
+                                                                                                  "name":  "filmcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  45673658,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/filmcraft/releases/download/v0.13.0/filmcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "filmcraft-0.14.0-windows-x64.msi",
+                                                                                                  "size_bytes":  35045376,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/filmcraft/releases/download/v0.13.0/filmcraft-0.14.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "SHA256SUMS.txt",
+                                                                                                  "size_bytes":  422,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/filmcraft/releases/download/v0.13.0/SHA256SUMS.txt",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-film-0.14.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  45673658,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/filmcraft/releases/download/v0.13.0/zetica-film-0.14.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-film-0.14.0-windows-x64.msi",
+                                                                                                  "size_bytes":  35045376,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/filmcraft/releases/download/v0.13.0/zetica-film-0.14.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              }
+                                                                                          ]
+                                                                           },
+                                                        "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                    },
+                                      "lightcraft":  {
+                                                         "repo":  "ZETIC7Z/lightcraft",
+                                                         "latest_release":  {
+                                                                                "tag":  "v0.16.0",
+                                                                                "name":  "Zetica Light v0.16.0",
+                                                                                "published_at":  "2026-11-01T05:45:52Z",
+                                                                                "html_url":  "https://github.com/ZETIC7Z/lightcraft/releases/tag/v0.16.0",
+                                                                                "prerelease":  false,
+                                                                                "notes_markdown":  "## Zetica Light Release v0.16.0\n\nOfficial Zetica Light photo library and raw developer for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- zetica-light-v0.16.0-windows-x64.msi: Native Windows Installer\n- zetica-light-v0.16.0-windows-x64-portable.zip: Portable standalone zip\n- $Id-v0.16.0-windows-x64.msi: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                                "assets":  [
+                                                                                               {
+                                                                                                   "name":  "lightcraft-0.15.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  119380567,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/lightcraft-0.15.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "lightcraft-0.15.0-windows-x64.msi",
+                                                                                                   "size_bytes":  97509376,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/lightcraft-0.15.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "lightcraft-0.16.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  119380565,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/lightcraft-0.16.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "lightcraft-0.16.0-windows-x64.msi",
+                                                                                                   "size_bytes":  97509376,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/lightcraft-0.16.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "SHA256SUMS.txt",
+                                                                                                   "size_bytes":  426,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/SHA256SUMS.txt",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-light-0.15.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  119380567,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/zetica-light-0.15.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-light-0.15.0-windows-x64.msi",
+                                                                                                   "size_bytes":  97509376,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/zetica-light-0.15.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-light-0.16.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  119380565,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/zetica-light-0.16.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-light-0.16.0-windows-x64.msi",
+                                                                                                   "size_bytes":  97509376,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/lightcraft/releases/download/v0.16.0/zetica-light-0.16.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               }
+                                                                                           ]
+                                                                            },
+                                                         "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                     },
+                                      "pdfcraft":  {
+                                                       "repo":  "ZETIC7Z/pdfcraft",
+                                                       "latest_release":  {
+                                                                              "tag":  null,
+                                                                              "name":  null,
+                                                                              "published_at":  null,
+                                                                              "html_url":  null,
+                                                                              "prerelease":  false,
+                                                                              "notes_markdown":  null,
+                                                                              "assets":  [
+
+                                                                                         ]
+                                                                          },
+                                                       "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                   },
+                                      "effectcraft":  {
+                                                          "repo":  "ZETIC7Z/effectcraft",
+                                                          "latest_release":  {
+                                                                                 "tag":  null,
+                                                                                 "name":  null,
+                                                                                 "published_at":  null,
+                                                                                 "html_url":  null,
+                                                                                 "prerelease":  false,
+                                                                                 "notes_markdown":  null,
+                                                                                 "assets":  [
+
+                                                                                            ]
+                                                                             },
+                                                          "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                      },
+                                      "designcraft":  {
+                                                          "repo":  "ZETIC7Z/designcraft",
+                                                          "latest_release":  {
+                                                                                 "tag":  "v0.14.0",
+                                                                                 "name":  "Zetica Design v0.14.0",
+                                                                                 "published_at":  "2026-10-30T21:43:46Z",
+                                                                                 "html_url":  "https://github.com/ZETIC7Z/designcraft/releases/tag/v0.14.0",
+                                                                                 "prerelease":  false,
+                                                                                 "notes_markdown":  "## Zetica Design Release v0.14.0\n\nOfficial page layout and publishing application for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- `zetica-design-v0.14.0-windows-x64.msi`: Native Windows Installer\n- `zetica-design-v0.14.0-windows-x64-portable.zip`: Portable standalone zip\n- `designcraft-v0.14.0-windows-x64.msi`: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                                 "assets":  [
+                                                                                                {
+                                                                                                    "name":  "designcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                    "size_bytes":  62123457,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/designcraft/releases/download/v0.14.0/designcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "designcraft-0.14.0-windows-x64.msi",
+                                                                                                    "size_bytes":  44716032,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/designcraft/releases/download/v0.14.0/designcraft-0.14.0-windows-x64.msi",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "SHA256SUMS.txt",
+                                                                                                    "size_bytes":  430,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/designcraft/releases/download/v0.14.0/SHA256SUMS.txt",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "zetica-design-0.14.0-windows-x64-portable.zip",
+                                                                                                    "size_bytes":  62123457,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/designcraft/releases/download/v0.14.0/zetica-design-0.14.0-windows-x64-portable.zip",
+                                                                                                    "sha256":  null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "zetica-design-0.14.0-windows-x64.msi",
+                                                                                                    "size_bytes":  44716032,
+                                                                                                    "download_url":  "https://github.com/ZETIC7Z/designcraft/releases/download/v0.14.0/zetica-design-0.14.0-windows-x64.msi",
+                                                                                                    "sha256":  null
+                                                                                                }
+                                                                                            ]
+                                                                             },
+                                                          "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                      },
+                                      "figcraft":  {
+                                                       "repo":  "ZETIC7Z/figcraft",
+                                                       "latest_release":  {
+                                                                              "tag":  "v0.12.0",
+                                                                              "name":  "Zetica Fig v0.12.0",
+                                                                              "published_at":  "2026-10-30T21:50:08Z",
+                                                                              "html_url":  "https://github.com/ZETIC7Z/figcraft/releases/tag/v0.12.0",
+                                                                              "prerelease":  false,
+                                                                              "notes_markdown":  "## Zetica Fig Release v0.12.0\n\nOfficial Zetica Fig interface design and prototyping for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- zetica-fig-v0.12.0-windows-x64.msi: Native Windows Installer\n- zetica-fig-v0.12.0-windows-x64-portable.zip: Portable standalone zip\n- $Id-v0.12.0-windows-x64.msi: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                              "assets":  [
+                                                                                             {
+                                                                                                 "name":  "figcraft-0.12.1-windows-x64-portable.zip",
+                                                                                                 "size_bytes":  48969836,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/figcraft/releases/download/v0.12.0/figcraft-0.12.1-windows-x64-portable.zip",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "figcraft-0.12.1-windows-x64.msi",
+                                                                                                 "size_bytes":  38821888,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/figcraft/releases/download/v0.12.0/figcraft-0.12.1-windows-x64.msi",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "SHA256SUMS.txt",
+                                                                                                 "size_bytes":  418,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/figcraft/releases/download/v0.12.0/SHA256SUMS.txt",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "zetica-fig-0.12.1-windows-x64-portable.zip",
+                                                                                                 "size_bytes":  48969836,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/figcraft/releases/download/v0.12.0/zetica-fig-0.12.1-windows-x64-portable.zip",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "zetica-fig-0.12.1-windows-x64.msi",
+                                                                                                 "size_bytes":  38821888,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/figcraft/releases/download/v0.12.0/zetica-fig-0.12.1-windows-x64.msi",
+                                                                                                 "sha256":  null
+                                                                                             }
+                                                                                         ]
+                                                                          },
+                                                       "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                   },
+                                      "wordcraft":  {
+                                                        "repo":  "ZETIC7Z/wordcraft",
+                                                        "latest_release":  {
+                                                                               "tag":  "v0.12.0",
+                                                                               "name":  "Zetica Word v0.12.0",
+                                                                               "published_at":  "2026-10-30T21:44:10Z",
+                                                                               "html_url":  "https://github.com/ZETIC7Z/wordcraft/releases/tag/v0.12.0",
+                                                                               "prerelease":  false,
+                                                                               "notes_markdown":  "## Zetica Word Release v0.12.0\n\nOfficial Zetica Word writing and document design for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- zetica-word-v0.12.0-windows-x64.msi: Native Windows Installer\n- zetica-word-v0.12.0-windows-x64-portable.zip: Portable standalone zip\n- $Id-v0.12.0-windows-x64.msi: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                               "assets":  [
+                                                                                              {
+                                                                                                  "name":  "SHA256SUMS.txt",
+                                                                                                  "size_bytes":  422,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/wordcraft/releases/download/v0.12.0/SHA256SUMS.txt",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "wordcraft-0.12.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  46745079,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/wordcraft/releases/download/v0.12.0/wordcraft-0.12.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "wordcraft-0.12.0-windows-x64.msi",
+                                                                                                  "size_bytes":  34906112,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/wordcraft/releases/download/v0.12.0/wordcraft-0.12.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-word-0.12.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  46745079,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/wordcraft/releases/download/v0.12.0/zetica-word-0.12.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-word-0.12.0-windows-x64.msi",
+                                                                                                  "size_bytes":  34906112,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/wordcraft/releases/download/v0.12.0/zetica-word-0.12.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              }
+                                                                                          ]
+                                                                           },
+                                                        "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                    },
+                                      "soundcraft":  {
+                                                         "repo":  "ZETIC7Z/soundcraft",
+                                                         "latest_release":  {
+                                                                                "tag":  "v0.14.0",
+                                                                                "name":  "Zetica Sound v0.14.0",
+                                                                                "published_at":  "2026-10-30T21:20:48Z",
+                                                                                "html_url":  "https://github.com/ZETIC7Z/soundcraft/releases/tag/v0.14.0",
+                                                                                "prerelease":  false,
+                                                                                "notes_markdown":  "## Zetica Sound Release v0.14.0\n\nOfficial Zetica Sound audio recording, editing and mixing for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- zetica-sound-v0.14.0-windows-x64.msi: Native Windows Installer\n- zetica-sound-v0.14.0-windows-x64-portable.zip: Portable standalone zip\n- $Id-v0.14.0-windows-x64.msi: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                                "assets":  [
+                                                                                               {
+                                                                                                   "name":  "SHA256SUMS.txt",
+                                                                                                   "size_bytes":  426,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/soundcraft/releases/download/v0.14.0/SHA256SUMS.txt",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "soundcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  18717018,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/soundcraft/releases/download/v0.14.0/soundcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "soundcraft-0.14.0-windows-x64.msi",
+                                                                                                   "size_bytes":  14491648,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/soundcraft/releases/download/v0.14.0/soundcraft-0.14.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-sound-0.14.0-windows-x64-portable.zip",
+                                                                                                   "size_bytes":  18717018,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/soundcraft/releases/download/v0.14.0/zetica-sound-0.14.0-windows-x64-portable.zip",
+                                                                                                   "sha256":  null
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "zetica-sound-0.14.0-windows-x64.msi",
+                                                                                                   "size_bytes":  14491648,
+                                                                                                   "download_url":  "https://github.com/ZETIC7Z/soundcraft/releases/download/v0.14.0/zetica-sound-0.14.0-windows-x64.msi",
+                                                                                                   "sha256":  null
+                                                                                               }
+                                                                                           ]
+                                                                            },
+                                                         "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                     },
+                                      "deckcraft":  {
+                                                        "repo":  "ZETIC7Z/deckcraft",
+                                                        "latest_release":  {
+                                                                               "tag":  "v0.12.0",
+                                                                               "name":  "Zetica Deck v0.12.0",
+                                                                               "published_at":  "2026-10-30T18:30:07Z",
+                                                                               "html_url":  "https://github.com/ZETIC7Z/deckcraft/releases/tag/v0.12.0",
+                                                                               "prerelease":  false,
+                                                                               "notes_markdown":  "## Zetica Deck Release v0.12.0\n\nOfficial presentations and slide shows application for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- `zetica-deck-v0.12.0-windows-x64.msi`: Native Windows Installer\n- `zetica-deck-v0.12.0-windows-x64-portable.zip`: Portable standalone zip\n- `deckcraft-v0.12.0-windows-x64.msi`: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                               "assets":  [
+                                                                                              {
+                                                                                                  "name":  "deckcraft-0.12.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  35101762,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/deckcraft/releases/download/v0.12.0/deckcraft-0.12.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "deckcraft-0.12.0-windows-x64.msi",
+                                                                                                  "size_bytes":  26464256,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/deckcraft/releases/download/v0.12.0/deckcraft-0.12.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "SHA256SUMS.txt",
+                                                                                                  "size_bytes":  422,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/deckcraft/releases/download/v0.12.0/SHA256SUMS.txt",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-deck-0.12.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  35101762,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/deckcraft/releases/download/v0.12.0/zetica-deck-0.12.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-deck-0.12.0-windows-x64.msi",
+                                                                                                  "size_bytes":  26464256,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/deckcraft/releases/download/v0.12.0/zetica-deck-0.12.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              }
+                                                                                          ]
+                                                                           },
+                                                        "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                    },
+                                      "cadcraft":  {
+                                                       "repo":  "ZETIC7Z/cadcraft",
+                                                       "latest_release":  {
+                                                                              "tag":  "v0.14.0",
+                                                                              "name":  "Zetica CAD v0.14.0",
+                                                                              "published_at":  "2026-10-30T21:30:58Z",
+                                                                              "html_url":  "https://github.com/ZETIC7Z/cadcraft/releases/tag/v0.14.0",
+                                                                              "prerelease":  false,
+                                                                              "notes_markdown":  "## Zetica CAD Release v0.14.0\n\nOfficial Zetica CAD computer-aided design and drafting for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- zetica-cad-v0.14.0-windows-x64.msi: Native Windows Installer\n- zetica-cad-v0.14.0-windows-x64-portable.zip: Portable standalone zip\n- $Id-v0.14.0-windows-x64.msi: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                              "assets":  [
+                                                                                             {
+                                                                                                 "name":  "cadcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                 "size_bytes":  37209799,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/cadcraft/releases/download/v0.14.0/cadcraft-0.14.0-windows-x64-portable.zip",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "cadcraft-0.14.0-windows-x64.msi",
+                                                                                                 "size_bytes":  27783168,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/cadcraft/releases/download/v0.14.0/cadcraft-0.14.0-windows-x64.msi",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "SHA256SUMS.txt",
+                                                                                                 "size_bytes":  418,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/cadcraft/releases/download/v0.14.0/SHA256SUMS.txt",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "zetica-cad-0.14.0-windows-x64-portable.zip",
+                                                                                                 "size_bytes":  37209799,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/cadcraft/releases/download/v0.14.0/zetica-cad-0.14.0-windows-x64-portable.zip",
+                                                                                                 "sha256":  null
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "zetica-cad-0.14.0-windows-x64.msi",
+                                                                                                 "size_bytes":  27783168,
+                                                                                                 "download_url":  "https://github.com/ZETIC7Z/cadcraft/releases/download/v0.14.0/zetica-cad-0.14.0-windows-x64.msi",
+                                                                                                 "sha256":  null
+                                                                                             }
+                                                                                         ]
+                                                                          },
+                                                       "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                   },
+                                      "gridcraft":  {
+                                                        "repo":  "ZETIC7Z/gridcraft",
+                                                        "latest_release":  {
+                                                                               "tag":  "v0.13.0",
+                                                                               "name":  "Zetica Grid v0.13.0",
+                                                                               "published_at":  "2026-10-30T21:26:18Z",
+                                                                               "html_url":  "https://github.com/ZETIC7Z/gridcraft/releases/tag/v0.13.0",
+                                                                               "prerelease":  false,
+                                                                               "notes_markdown":  "## Zetica Grid Release v0.13.0\n\nOfficial Zetica Grid spreadsheets and data analysis for the **Zetica Creative Suite**. Rebuilt from scratch in pure Rust.\n\n### Included Packages:\n- zetica-grid-v0.13.0-windows-x64.msi: Native Windows Installer\n- zetica-grid-v0.13.0-windows-x64-portable.zip: Portable standalone zip\n- $Id-v0.13.0-windows-x64.msi: Upstream compatible package\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                               "assets":  [
+                                                                                              {
+                                                                                                  "name":  "gridcraft-0.13.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  23123495,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/gridcraft/releases/download/v0.13.0/gridcraft-0.13.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "gridcraft-0.13.0-windows-x64.msi",
+                                                                                                  "size_bytes":  17633280,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/gridcraft/releases/download/v0.13.0/gridcraft-0.13.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "SHA256SUMS.txt",
+                                                                                                  "size_bytes":  422,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/gridcraft/releases/download/v0.13.0/SHA256SUMS.txt",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-grid-0.13.0-windows-x64-portable.zip",
+                                                                                                  "size_bytes":  23123495,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/gridcraft/releases/download/v0.13.0/zetica-grid-0.13.0-windows-x64-portable.zip",
+                                                                                                  "sha256":  null
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "zetica-grid-0.13.0-windows-x64.msi",
+                                                                                                  "size_bytes":  17633280,
+                                                                                                  "download_url":  "https://github.com/ZETIC7Z/gridcraft/releases/download/v0.13.0/zetica-grid-0.13.0-windows-x64.msi",
+                                                                                                  "sha256":  null
+                                                                                              }
+                                                                                          ]
+                                                                           },
+                                                        "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                    },
+                                      "craft-launcher":  {
+                                                             "repo":  "ZETIC7Z/craft-launcher",
+                                                             "latest_release":  {
+                                                                                    "tag":  "v0.10.4",
+                                                                                    "name":  "Zetica Hub v0.10.4",
+                                                                                    "published_at":  "2026-11-01T05:57:30Z",
+                                                                                    "html_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/tag/v0.10.4",
+                                                                                    "prerelease":  false,
+                                                                                    "notes_markdown":  "## Zetica Hub Release v0.10.4\n\nOfficial native installer and hub for the ZETICA Creative Suite.\n\n### Included Packages:\n- `zetica-hub-windows-x64.msi`: Official Windows MSI Installer with custom folder selector and desktop shortcut option.\n- `zetica-hub-windows-x64.zip`: Standalone portable binary for Windows 64-bit.\n\nDeveloped by **Sam Pangilinan** ([zeticuz.xyz](https://www.zeticuz.xyz/)).\n",
+                                                                                    "assets":  [
+                                                                                                   {
+                                                                                                       "name":  "artcraft-launcher-0.10.4-windows-x64-portable.zip",
+                                                                                                       "size_bytes":  11020985,
+                                                                                                       "download_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.4/artcraft-launcher-0.10.4-windows-x64-portable.zip",
+                                                                                                       "sha256":  null
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "artcraft-launcher-0.10.4-windows-x64.msi",
+                                                                                                       "size_bytes":  9953280,
+                                                                                                       "download_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.4/artcraft-launcher-0.10.4-windows-x64.msi",
+                                                                                                       "sha256":  null
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "artcraft-launcher-windows-x64-portable.zip",
+                                                                                                       "size_bytes":  11020985,
+                                                                                                       "download_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.4/artcraft-launcher-windows-x64-portable.zip",
+                                                                                                       "sha256":  null
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "artcraft-launcher-windows-x64.msi",
+                                                                                                       "size_bytes":  9953280,
+                                                                                                       "download_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.4/artcraft-launcher-windows-x64.msi",
+                                                                                                       "sha256":  null
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "SHA256SUMS.txt",
+                                                                                                       "size_bytes":  624,
+                                                                                                       "download_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.4/SHA256SUMS.txt",
+                                                                                                       "sha256":  null
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "zetica-hub-windows-x64.msi",
+                                                                                                       "size_bytes":  9953280,
+                                                                                                       "download_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.4/zetica-hub-windows-x64.msi",
+                                                                                                       "sha256":  null
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "zetica-hub-windows-x64.zip",
+                                                                                                       "size_bytes":  11020985,
+                                                                                                       "download_url":  "https://github.com/ZETIC7Z/craft-launcher/releases/download/v0.10.4/zetica-hub-windows-x64.zip",
+                                                                                                       "sha256":  null
+                                                                                                   }
+                                                                                               ]
+                                                                                },
+                                                             "app_last_fetched":  "2026-11-01T05:58:08Z"
+                                                         }
+                                  },
+                         "last_fetched":  "2026-11-01T05:58:08Z"
+                     },
+    "app_renames":  [
+
+                    ],
+    "repo_renames":  [
+
+                     ],
+    "important_notices":  {
+                              "announcements":  [
+
+                                                ],
+                              "alerts":  [
+
+                                         ]
+                          }
+}
