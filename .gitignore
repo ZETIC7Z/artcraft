@@ -31,6 +31,7 @@ node_modules/
 # Windows installers and binaries
 *.exe
 *.msi
+!site/zetica-hub-windows-x64.msi
 *.dll
 *.pdb
 
@@ -38,3 +39,6 @@ node_modules/
 repos/
 scraps/
 runtime_data/
+temp_deckcraft_main.rs
+test_release/
+downloaded_hub/
