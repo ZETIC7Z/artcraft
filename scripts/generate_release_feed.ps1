@@ -85,10 +85,11 @@ if (-not (Test-Path $parent)) {
 }
 
 $json = $feed | ConvertTo-Json -Depth 10
-[System.IO.File]::WriteAllText($OutputFile, $json, [System.Text.Encoding]::UTF8)
+$utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+[System.IO.File]::WriteAllText($OutputFile, $json, $utf8NoBom)
 
 # Also create the extensionless copy so Vercel can serve both
 $extLess = Join-Path $parent "release_info"
-[System.IO.File]::WriteAllText($extLess, $json, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText($extLess, $json, $utf8NoBom)
 
 Write-Host "Successfully generated release feed at: $OutputFile and $extLess"

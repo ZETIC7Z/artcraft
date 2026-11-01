@@ -181,3 +181,37 @@
   - `install-policy.json`: Aligned registry keys with `Software\ZETICA\Zetica Hub`.
 - **Continuous Upstream Synchronization**:
   - `.github/workflows/sync-upstream.yml` scheduled daily at `00:00 UTC` to pull upstream core engine updates while preserving the ZETICA brand identity layer.
+
+---
+
+## 8. Complete 14-App Suite Status & Production Releases (`ZETIC7Z`)
+
+All 14 applications in the Zetica Suite are officially published with native Windows Installer (`.msi`) and portable standalone (`.zip`) releases on GitHub:
+
+| # | Application | Repository | Latest Tag | Published Packages | Local State |
+|---|---|---|---|---|---|
+| 1 | **Zetica Hub** | `ZETIC7Z/craft-launcher` | `v0.10.4` | `zetica-hub-windows-x64.msi`<br>`zetica-hub-windows-x64.zip` | Installed (`v0.10.4`) |
+| 2 | **Zetica Deck** | `ZETIC7Z/deckcraft` | `v0.12.0` | `zetica-deck-0.12.0-windows-x64.msi`<br>`zetica-deck-0.12.0-windows-x64-portable.zip` | Installed (`v0.12.0`) |
+| 3 | **Zetica Design** | `ZETIC7Z/designcraft` | `v0.14.0` | `zetica-design-0.14.0-windows-x64.msi`<br>`zetica-design-0.14.0-windows-x64-portable.zip` | Installed (`v0.14.0`) |
+| 4 | **Zetica Motion** | `ZETIC7Z/effectcraft` | `v0.19.0` | `zetica-motion-0.19.0-windows-x64.msi`<br>`zetica-motion-0.19.0-windows-x64-portable.zip` | Installed (`v0.19.0`) |
+| 5 | **Zetica Sound** | `ZETIC7Z/soundcraft` | `v0.14.0` | `zetica-sound-0.14.0-windows-x64.msi`<br>`zetica-sound-0.14.0-windows-x64-portable.zip` | Installed (`v0.14.0`) |
+| 6 | **Zetica PDF** | `ZETIC7Z/pdfcraft` | `v0.15.0` | `zetica-pdf-0.15.0-windows-x64.msi`<br>`zetica-pdf-0.15.0-windows-x64-portable.zip` | Installed (`v0.15.0`) |
+| 7 | **Zetica Light** | `ZETIC7Z/lightcraft` | `v0.16.0` | `zetica-light-0.16.0-windows-x64.msi`<br>`zetica-light-0.16.0-windows-x64-portable.zip` | Installed (`v0.16.0`) |
+| 8 | **Zetica Photo** | `ZETIC7Z/photocraft` | `v0.15.0` | `zetica-photo-0.17.0-windows-x64.msi`<br>`zetica-photo-0.17.0-windows-x64-portable.zip` | Available |
+| 9 | **Zetica Vector** | `ZETIC7Z/vectorcraft` | `v0.15.0` | `zetica-vector-0.18.0-windows-x64.msi`<br>`zetica-vector-0.18.0-windows-x64-portable.zip` | Available |
+| 10 | **Zetica Film** | `ZETIC7Z/filmcraft` | `v0.13.0` | `zetica-film-0.14.0-windows-x64.msi`<br>`zetica-film-0.14.0-windows-x64-portable.zip` | Available |
+| 11 | **Zetica CAD** | `ZETIC7Z/cadcraft` | `v0.14.0` | `zetica-cad-0.14.0-windows-x64.msi`<br>`zetica-cad-0.14.0-windows-x64-portable.zip` | Available |
+| 12 | **Zetica Grid** | `ZETIC7Z/gridcraft` | `v0.13.0` | `zetica-grid-0.13.0-windows-x64.msi`<br>`zetica-grid-0.13.0-windows-x64-portable.zip` | Available |
+| 13 | **Zetica Fig** | `ZETIC7Z/figcraft` | `v0.12.0` | `zetica-fig-0.12.1-windows-x64.msi`<br>`zetica-fig-0.12.1-windows-x64-portable.zip` | Available |
+| 14 | **Zetica Word** | `ZETIC7Z/wordcraft` | `v0.12.0` | `zetica-word-0.12.0-windows-x64.msi`<br>`zetica-word-0.12.0-windows-x64-portable.zip` | Available |
+
+### Release Feed Architecture & BOM Resolution:
+- **Feed Endpoint**: `https://zetica.vercel.app/api/v1/release_info`
+- **Root Cause & Fix**: PowerShell default UTF-8 output appends a 3-byte Byte Order Mark (`0xEF 0xBB 0xBF`), which causes strict JSON parsers (such as Rust's `serde_json::from_str`) to fail with "unexpected value at line 1 column 1".
+- **Resolution**: Updated `scripts/generate_release_feed.ps1` to use `[System.Text.UTF8Encoding]::new($false)` (UTF-8 without BOM). Deployed to Vercel production with `Content-Type: application/json` and `Access-Control-Allow-Origin: *`.
+- **Zetica Hub Detection Engine**:
+  - `FEED_URL` pointed to `https://zetica.vercel.app/api/v1/release_info`.
+  - Windows registry detection accepts `Publisher: "ZETICA / Sam Pangilinan"`.
+  - Exe resolver detects `AppData\Local\Programs\Zetica\<App>`.
+  - Desktop shortcuts point to `Zetica <App>.lnk` with custom branded icons and descriptions.
+
